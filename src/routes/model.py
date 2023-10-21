@@ -4,8 +4,8 @@ from PIL import Image
 
 def prediction_tumor():
     #Carga el modelo.
-    model = tensorflow.keras.models.load_model("tumor_model.h5")
-    img = Image.open("image.png").convert("L")
+    model = tensorflow.keras.models.load_model("routes/tumor_model.h5")
+    img = Image.open("routes/image.png").convert("L")
     #Transforma la imagen para que coincidan con el modelo. 
     img = img.resize((224, 224)) 
     img = np.array(img)

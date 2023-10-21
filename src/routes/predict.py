@@ -1,7 +1,7 @@
 from flask_restx import Resource, Namespace, reqparse, inputs
 from .response_generation import response_generation
 from werkzeug.datastructures import FileStorage
-
+from .model import prediction_tumor
 ns_predict = Namespace("predict")
 # Define un analizador de solicitud para manejar la carga de archivos
 parser = reqparse.RequestParser()
@@ -23,7 +23,13 @@ class Predict(Resource):
         image = args['image']
     
         if image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-            image.save("routes/models_ia/image.png")
-            return response_generation({"message" : "todo piola"}, 200)
+            image.save("routes/image.png")
+            response_data = {}
+            class_probabilities = prediction_tumor()
+
+            for tumor_type, probability in class_probabilities:
+                response_data[tumor_type.lower()] = probability
+            
+            return response_generation(response_data, 200)
         else:
             return response_generation({"message" : "I'm a teapot!"}, 418)
