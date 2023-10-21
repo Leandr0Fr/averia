@@ -1,5 +1,6 @@
 from flask import Flask
-from routes.ping import ns
+from routes.ping import ns_ping
+from routes.predict import ns_predict
 from flask_restx import Api
 import os
 
@@ -9,7 +10,8 @@ def create_app():
     app = Flask(__name__)
     api.init_app(app)
     #con esto se agrega los endpoints
-    api.add_namespace(ns)
+    api.add_namespace(ns_ping)
+    api.add_namespace(ns_predict)
     return app
 
 app = create_app()
