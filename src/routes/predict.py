@@ -38,23 +38,31 @@ parser_wini.add_argument('image', type=FileStorage, location='files', required=T
 parser_wini.add_argument('puntada_lateral', type=inputs.boolean, help='puntada_lateral')
 parser_wini.add_argument('fiebre', type=inputs.boolean, help='fiebre')
 parser_wini.add_argument('dificultad_respiratoria', type=inputs.boolean, help='dificultad_respiratoria')
+
 @ns_predict.route("/wini")
 class Predict(Resource):
     @ns_predict.expect(parser_wini)
     def post(self):
         args = parser_wini.parse_args()
+        response_data = {}
         image = args['image']
-        perdida_visual = args['puntada_lateral']
+        puntada_lateral = args['puntada_lateral']
         fiebre = args['fiebre']
         dificultad_respiratoria = args['dificultad_respiratoria']
+
+        response_data["puntada_lateral"] = puntada_lateral
+        response_data["fiebre"] = fiebre
+        response_data["dificultad_respiratoria"] = dificultad_respiratoria
+
         if image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
             image.save("routes/image.png")
-            response_data = {}
             class_probabilities = prediction_pneumonia()
 
-            for tumor_type, probability in class_probabilities:
-                response_data[tumor_type.lower()] = probability
+            for type, probability in class_probabilities:
+                response_data[type.lower()] = probability
             
+            print(response_data)
+
             return response_generation(response_data, 200)
         else:
             return response_generation({"message" : "I'm a teapot!"}, 418)
