@@ -1,5 +1,5 @@
 from flask import Flask
-from routes.hello import ns
+from routes.ping import ns
 from flask_restx import Api
 import os
 
