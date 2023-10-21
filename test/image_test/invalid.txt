@@ -1,0 +1,1 @@
+Esto es un archivo que no acepta el endpoint.
