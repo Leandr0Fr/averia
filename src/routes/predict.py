@@ -4,18 +4,18 @@ from werkzeug.datastructures import FileStorage
 from .model import prediction_tumor, prediction_pneumonia
 ns_predict = Namespace("predict")
 # Define un analizador de solicitud para manejar la carga de archivos
-parser = reqparse.RequestParser()
-parser.add_argument('image', type=FileStorage, location='files', required=True, help='Image file')
+parser_fred = reqparse.Requestparser_fred()
+parser_fred.add_argument('image', type=FileStorage, location='files', required=True, help='Image file')
 #ACORDARSE DEL inputs.boolean
-parser.add_argument('debilidad_focal', type=inputs.boolean, help='debilidad_focal')
-parser.add_argument('convulsiones', type=inputs.boolean, help='convulsiones')
-parser.add_argument('perdida_visual', type=inputs.boolean, help='perdida_visual')
+parser_fred.add_argument('debilidad_focal', type=inputs.boolean, help='debilidad_focal')
+parser_fred.add_argument('convulsiones', type=inputs.boolean, help='convulsiones')
+parser_fred.add_argument('perdida_visual', type=inputs.boolean, help='perdida_visual')
 
 @ns_predict.route("/fred")
 class Predict(Resource):
-    @ns_predict.expect(parser)
+    @ns_predict.expect(parser_fred)
     def post(self):
-        args = parser.parse_args()
+        args = parser_fred.parse_args()
         debilidad = args['debilidad_focal']
         convulsiones = args['convulsiones']
         perdida_visual = args['perdida_visual']
