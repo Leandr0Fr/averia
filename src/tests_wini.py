@@ -90,6 +90,52 @@ class TestAppEndpoints(unittest.TestCase):
         fiebre = type(response_data.get("fiebre"))
         self.assertFalse(fiebre)
 
+
+# -------------- Test puntada ----------------
+
+    def test_none_puntada(self):
+        data = {'image': None,'puntada_lateral': None,'fiebre': None, 'dificultad_respiratoria': None}
+        response = self.app.post('/predict/wini', json=data)
+        response_data = response.get_json()
+        self.assertIsNone(response_data.get("puntada_lateral"))
+
+    
+    def test_void_puntada(self):
+        data = {'image': None,'puntada_lateral': "",'fiebre': None, 'dificultad_respiratoria': None}
+        response = self.app.post('/predict/wini', json=data)
+        response_data = response.get_json()
+        self.assertIsNone(response_data.get("puntada_lateral"))
+
+    def test_invalid_puntada(self):
+        data = {'image': None,'puntada_lateral': 1,'fiebre': None, 'dificultad_respiratoria': None}
+        response = self.app.post('/predict/wini', json=data)
+        response_data = response.get_json()
+
+        puntada_lateral = type(response_data.get("puntada_lateral"))
+
+        if(isinstance(puntada_lateral, bool)):
+            self.assertFalse(True)
+        else:
+            self.assertFalse(False)
+
+    def test_true_puntada(self):
+        data = {'image': None,'puntada_lateral': True,'fiebre': None, 'dificultad_respiratoria': None}
+        response = self.app.post('/predict/wini', json=data)
+        response_data = response.get_json()
+        puntada_lateral = type(response_data.get("puntada_lateral"))
+        self.assertTrue(puntada_lateral)
+
+    def test_false_puntada(self):
+        data = {'image': None,'puntada_lateral': False,'fiebre': None, 'dificultad_respiratoria': None}
+        response = self.app.post('/predict/wini', json=data)
+        response_data = response.get_json()
+        puntada_lateral = type(response_data.get("puntada_lateral"))
+        self.assertFalse(puntada_lateral)
+
+
+#-------------------------- Test respiratorio -------------------------
+    
+
     
         
 
