@@ -11,6 +11,7 @@ parser.add_argument('debilidad_focal', type=inputs.boolean, help='debilidad_foca
 parser.add_argument('convulsiones', type=inputs.boolean, help='convulsiones')
 parser.add_argument('perdida_visual', type=inputs.boolean, help='perdida_visual')
 
+
 @ns_predict.route("/fred")
 class Predict(Resource):
     @ns_predict.expect(parser)
@@ -20,8 +21,9 @@ class Predict(Resource):
         convulsiones = args['convulsiones']
         perdida_visual = args['perdida_visual']
         image = args['image']
+    
         if image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-            image.save("image.png")
+            image.save("routes/models_ia/image.png")
             return response_generation({"message" : "todo piola"}, 200)
         else:
             return response_generation({"message" : "I'm a teapot!"}, 418)
