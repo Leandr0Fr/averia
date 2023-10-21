@@ -29,7 +29,7 @@ def prediction_pneumonia():
     img_array = np.array(img)
     img_array = img_array / 255
     # Realiza la predicción
-    class_labels = ["Pneunomia", "No_pneunomia"]
+    class_labels = ["pneumonia", "no_pneumonia"]
     predict = model.predict(np.expand_dims(img_array, axis=0))[0]
     probabilities = [(prob * 100) for prob in predict]
     return list(zip(class_labels, probabilities))
