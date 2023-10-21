@@ -4,7 +4,7 @@ from werkzeug.datastructures import FileStorage
 from .model import prediction_tumor, prediction_pneumonia
 ns_predict = Namespace("predict")
 # Define un analizador de solicitud para manejar la carga de archivos
-parser_fred = reqparse.Requestparser_fred()
+parser_fred = reqparse.RequestParser()
 parser_fred.add_argument('image', type=FileStorage, location='files', required=True, help='Image file')
 #ACORDARSE DEL inputs.boolean
 parser_fred.add_argument('debilidad_focal', type=inputs.boolean, help='debilidad_focal')
