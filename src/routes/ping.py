@@ -1,5 +1,5 @@
 from flask_restx import Resource, Namespace
-from response_generation import response_generation
+from .response_generation import response_generation
 ns = Namespace("ping")
 
 @ns.route("")
