@@ -35,12 +35,18 @@ class Predict(Resource):
         
 parser_wini = reqparse.RequestParser()
 parser_wini.add_argument('image', type=FileStorage, location='files', required=True, help='Image file')
+parser_wini.add_argument('puntada_lateral', type=inputs.boolean, help='puntada_lateral')
+parser_wini.add_argument('fiebre', type=inputs.boolean, help='fiebre')
+parser_wini.add_argument('dificultad_respiratoria', type=inputs.boolean, help='dificultad_respiratoria')
 @ns_predict.route("/wini")
 class Predict(Resource):
     @ns_predict.expect(parser_wini)
     def post(self):
         args = parser_wini.parse_args()
         image = args['image']
+        perdida_visual = args['puntada_lateral']
+        fiebre = args['fiebre']
+        dificultad_respiratoria = args['dificultad_respiratoria']
         if image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
             image.save("routes/image.png")
             response_data = {}
