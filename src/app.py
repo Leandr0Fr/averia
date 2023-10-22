@@ -4,7 +4,7 @@ from routes.predict import ns_predict
 from routes.feedback import ns_feedback
 from flask_restx import Api
 import os
-import subprocess
+
 api = Api()
 
 def create_app():

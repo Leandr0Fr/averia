@@ -23,7 +23,7 @@ class Predict(Resource):
         image = args['image']
     
         if image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-            image.save("image.png")
+            image.save("images/image.png")
             response_data = {}
             class_probabilities = prediction_tumor()
 
@@ -51,7 +51,7 @@ class Predict(Resource):
         dificultad_respiratoria = args['dificultad_respiratoria']
 
         if image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-            image.save("../images/image.png")
+            image.save("images/image.png")
             response_data = {}
             class_probabilities = prediction_pneumonia()
 
