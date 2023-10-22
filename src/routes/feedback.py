@@ -21,6 +21,12 @@ class Feedback(Resource):
         pituitary = args['pituitary']
         no_tumor = args['no_tumor']
         is_int = type(id)
+
+        true_count = sum([glioma, meningioma, pituitary, no_tumor])
+        if true_count > 1:
+            return response_generation({"message": "ERROR! there is more than one true value"}, 418)
+        if glioma == False and meningioma == False and pituitary == False and no_tumor == False:
+            return response_generation({"message": "ERROR! all values is false"}, 418)
         if (glioma == None or id == None or meningioma == None or pituitary == None or no_tumor == None or is_int != int):
             return response_generation({"message" : "ERROR! Values Null"}, 418)
         return response_generation({"message" : "POST ACCEPTED"}, 200)
@@ -35,11 +41,17 @@ parser_wini.add_argument('no_pneumonia', type=inputs.boolean, help='no_pneumonia
 class Predict(Resource):
     @ns_feedback.expect(parser_wini)
     def post(self):
-        args = parser_fred.parse_args()
+        args = parser_wini.parse_args()
         id = args['id_image']
         pneumonia = args['pneumonia']
         no_pneumonia = args['no_pneumonia']
         is_int = type(id)
+
+        true_count = sum([pneumonia, no_pneumonia])
+        if true_count > 1:
+            return response_generation({"message": "ERROR! there is more than one true value"}, 418)
+        if pneumonia == False and no_pneumonia == False:
+            return response_generation({"message": "ERROR! all values is false"}, 418)
         if (pneumonia == None or id == None or no_pneumonia == None or is_int != int):
             return response_generation({"message" : "ERROR! Values Null"}, 418)
         return response_generation({"message" : "POST ACCEPTED"}, 200)
