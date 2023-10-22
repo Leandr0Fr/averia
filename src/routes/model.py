@@ -1,9 +1,12 @@
 import numpy as np
 import tensorflow
 from PIL import Image
+import os
 
 def prediction_tumor():
     #Carga el modelo.
+    ruta_actual = os.path.abspath('.')
+    print("Ruta actual:", ruta_actual)
     model = tensorflow.keras.models.load_model("/workspace/models_ia/tumor_model.h5")
     img = Image.open("/workspace/images/image.png").convert("L")
     #Transforma la imagen para que coincidan con el modelo. 
