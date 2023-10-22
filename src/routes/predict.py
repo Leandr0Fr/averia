@@ -44,18 +44,14 @@ class Predict(Resource):
     @ns_predict.expect(parser_wini)
     def post(self):
         args = parser_wini.parse_args()
-        response_data = {}
         image = args['image']
         puntada_lateral = args['puntada_lateral']
         fiebre = args['fiebre']
         dificultad_respiratoria = args['dificultad_respiratoria']
 
-        response_data["puntada_lateral"] = puntada_lateral
-        response_data["fiebre"] = fiebre
-        response_data["dificultad_respiratoria"] = dificultad_respiratoria
-
         if image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
             image.save("routes/image.png")
+            response_data = {}
             class_probabilities = prediction_pneumonia()
 
             for type, probability in class_probabilities:
