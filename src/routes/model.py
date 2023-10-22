@@ -7,8 +7,8 @@ def prediction_tumor():
     #Carga el modelo.
     ruta_actual = os.path.abspath('.')
     print("Ruta actual:", ruta_actual)
-    model = tensorflow.keras.models.load_model("/workspace/models_ia/tumor_model.h5")
-    img = Image.open("/workspace/images/image.png").convert("L")
+    model = tensorflow.keras.models.load_model("/workspace/src/models_ia/tumor_model.h5")
+    img = Image.open("/workspace/src/images/image.png").convert("L")
     #Transforma la imagen para que coincidan con el modelo. 
     img = img.resize((224, 224)) 
     img = np.array(img)
@@ -24,9 +24,9 @@ def prediction_tumor():
 
 def prediction_pneumonia():
     #Carga el modelo.
-    model = tensorflow.keras.models.load_model("/workspace/models_ia/neumonia-resnet.h5")
+    model = tensorflow.keras.models.load_model("/workspace/src/models_ia/neumonia-resnet.h5")
     #Transforma la imagen para que coincidan con el modelo. 
-    img = Image.open("/workspace/images/image.png").convert("RGB")
+    img = Image.open("/workspace/src/images/image.png").convert("RGB")
     img = img.resize((224, 224)) 
     img_array = np.array(img)
     img_array = img_array / 255
