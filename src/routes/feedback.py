@@ -20,7 +20,8 @@ class Feedback(Resource):
         meningioma = args['meningioma']
         pituitary = args['pituitary']
         no_tumor = args['no_tumor']
-        if (glioma == None or id == None or meningioma == None or pituitary == None or no_tumor == None):
+        is_int = type(id)
+        if (glioma == None or id == None or meningioma == None or pituitary == None or no_tumor == None or is_int != int):
             return response_generation({"message" : "ERROR! Values Null"}, 418)
         return response_generation({"message" : "POST ACCEPTED"}, 200)
 
@@ -38,6 +39,7 @@ class Predict(Resource):
         id = args['id_image']
         pneumonia = args['pneumonia']
         no_pneumonia = args['no_pneumonia']
-        if (pneumonia == None or id == None or no_pneumonia == None):
+        is_int = type(id)
+        if (pneumonia == None or id == None or no_pneumonia == None or is_int != int):
             return response_generation({"message" : "ERROR! Values Null"}, 418)
         return response_generation({"message" : "POST ACCEPTED"}, 200)
