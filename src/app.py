@@ -8,11 +8,6 @@ import subprocess
 api = Api()
 
 def create_app():
-
-# Ejecutar el comando "pwd" en la línea de comandos
-    result = subprocess.run(["ls -la"], stdout=subprocess.PIPE, text=True)
-# Imprimir la salida del comando
-    print("Directorio actual app.py:", result.stdout)
     app = Flask(__name__)
     api.init_app(app)
     #con esto se agrega los endpoints
