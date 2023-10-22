@@ -154,5 +154,6 @@ pyvenv.cfg
 .venv
 pip-selfcheck.json
 
-
+# vscode
+.vscode
 # End of https://www.toptal.com/developers/gitignore/api/python
