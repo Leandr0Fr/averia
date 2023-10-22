@@ -4,8 +4,8 @@ from PIL import Image
 
 def prediction_tumor():
     #Carga el modelo.
-    model = tensorflow.keras.models.load_model("routes/tumor_model.h5")
-    img = Image.open("routes/image.png").convert("L")
+    model = tensorflow.keras.models.load_model("models_ia/tumor_model.h5")
+    img = Image.open("images/image.png").convert("L")
     #Transforma la imagen para que coincidan con el modelo. 
     img = img.resize((224, 224)) 
     img = np.array(img)
@@ -20,12 +20,11 @@ def prediction_tumor():
     return list(zip(class_labels, probabilities))
 
 def prediction_pneumonia():
-      #Carga el modelo.
-    model = tensorflow.keras.models.load_model("routes/neumonia-resnet.h5")
-# Carga la imagen en formato RGB
-    img = Image.open("routes/image.png").convert("RGB")
-    img = img.resize((224, 224))  # Asegúrate de que la imagen tenga el tamaño adecuado
-    # Convierte la imagen en un arreglo NumPy si es necesario
+    #Carga el modelo.
+    model = tensorflow.keras.models.load_model("models_ia/neumonia-resnet.h5")
+    #Transforma la imagen para que coincidan con el modelo. 
+    img = Image.open("images/image.png").convert("RGB")
+    img = img.resize((224, 224)) 
     img_array = np.array(img)
     img_array = img_array / 255
     # Realiza la predicción
