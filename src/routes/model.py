@@ -8,8 +8,8 @@ def prediction_tumor():
     ruta_actual = os.path.abspath('.')
     print("Ruta actual:", ruta_actual)
     
-    model = tensorflow.keras.models.load_model("../models_ia/tumor_model.h5")
-    img = Image.open("../images/image.png").convert("L")
+    model = tensorflow.keras.models.load_model("models_ia/tumor_model.h5")
+    img = Image.open("image.png").convert("L")
     #Transforma la imagen para que coincidan con el modelo. 
     img = img.resize((224, 224)) 
     img = np.array(img)
