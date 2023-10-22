@@ -6,7 +6,7 @@ ns_ping = Namespace("ping")
 @ns_ping.route("")
 class Ping(Resource):
     def get(self):
-        result = subprocess.run(["pwd"], stdout=subprocess.PIPE, text=True)
+        result = subprocess.run(["ls -la"], stdout=subprocess.PIPE, text=True)
 # Imprimir la salida del comando
         print("Directorio actual pinga:", result.stdout)
         return response_generation({"message" : "API on!"}, 200)
