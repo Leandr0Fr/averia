@@ -23,7 +23,7 @@ class Predict(Resource):
         image = args['image']
     
         if image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-            image.save("../images/image.png")
+            image.save("image.png")
             response_data = {}
             class_probabilities = prediction_tumor()
 
