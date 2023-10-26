@@ -3,11 +3,12 @@ from .response_generation import response_generation
 from werkzeug.datastructures import FileStorage
 from .model import prediction_tumor, prediction_pneumonia
 import os
+import utils
+
 ns_predict = Namespace("predict")
 # Define un analizador de solicitud para manejar la carga de archivos
 parser_fred = reqparse.RequestParser()
 parser_fred.add_argument('image', type=FileStorage, location='files', required=True, help='Image file')
-#ACORDARSE DEL inputs.boolean
 parser_fred.add_argument('debilidad_focal', type=inputs.boolean, help='debilidad_focal')
 parser_fred.add_argument('convulsiones', type=inputs.boolean, help='convulsiones')
 parser_fred.add_argument('perdida_visual', type=inputs.boolean, help='perdida_visual')
@@ -50,6 +51,12 @@ class Predict(Resource):
         fiebre = args['fiebre']
         dificultad_respiratoria = args['dificultad_respiratoria']
 
+        """Aca deberia llamar a la funcion que guarda la imagen en el fileserver y de
+            alguna manera obtener la direccion donde se guarda en el fileserver.
+        """
+        if not utils.exists_id("test.csv", 1):
+            print("no existe")
+             
         if image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
             image.save("images/image.png")
             response_data = {}
