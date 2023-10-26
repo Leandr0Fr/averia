@@ -3,7 +3,6 @@ from .response_generation import response_generation
 from werkzeug.datastructures import FileStorage
 from .model import prediction_tumor, prediction_pneumonia
 import os
-import utils
 
 ns_predict = Namespace("predict")
 # Define un analizador de solicitud para manejar la carga de archivos
