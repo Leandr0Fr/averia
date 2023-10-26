@@ -53,10 +53,10 @@ class Predict(Resource):
 
         """Aca deberia llamar a la funcion que guarda la imagen en el fileserver y de
             alguna manera obtener la direccion donde se guarda en el fileserver.
-        """
+        
         if not utils.exists_id("test.csv", 1):
             print("no existe")
-             
+        """
         if image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
             image.save("images/image.png")
             response_data = {}
