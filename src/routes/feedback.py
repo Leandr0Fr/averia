@@ -1,5 +1,6 @@
 from flask_restx import Resource, Namespace, reqparse, inputs
 from .response_generation import response_generation
+from .utils import *
 
 ns_feedback = Namespace("feedback")
 # Define un analizador de solicitud para manejar la carga de archivos
@@ -43,15 +44,16 @@ class Predict(Resource):
     def post(self):
         args = parser_wini.parse_args()
         id = args['id_image']
-        pneumonia = args['pneumonia']
-        no_pneumonia = args['no_pneumonia']
-        is_int = type(id)
-
-        true_count = sum([pneumonia, no_pneumonia])
-        if true_count > 1:
+        if not exists_id ("csv/wini.csv", id):
+            return response_generation({"message": "ERROR! no exists ID"}, 418)
+        
+        pneumonia = 1 if args['pneumonia'] else 0
+        no_pneumonia = 1 if args['no_pneumonia'] else 0
+        
+        if (pneumonia + no_pneumonia) == 2:
             return response_generation({"message": "ERROR! there is more than one true value"}, 418)
-        if pneumonia == False and no_pneumonia == False:
+        if (pneumonia + no_pneumonia) == 0:
             return response_generation({"message": "ERROR! all values is false"}, 418)
-        if (pneumonia == None or id == None or no_pneumonia == None or is_int != int):
-            return response_generation({"message" : "ERROR! Values Null"}, 418)
+    
+        append_feedback_wini(id, pneumonia, no_pneumonia)
         return response_generation({"message" : "POST ACCEPTED"}, 200)
