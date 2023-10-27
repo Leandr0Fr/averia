@@ -2,6 +2,7 @@ from flask_restx import Resource, Namespace, reqparse, inputs
 from .response_generation import response_generation
 from werkzeug.datastructures import FileStorage
 from .model import prediction_tumor, prediction_pneumonia
+from .utils import *
 import os
 
 ns_predict = Namespace("predict")
@@ -36,6 +37,7 @@ class Predict(Resource):
         
 parser_wini = reqparse.RequestParser()
 parser_wini.add_argument('image', type=FileStorage, location='files', required=True, help='Image file')
+parser_wini.add_argument('id_image', type=int, help='Id_image')
 parser_wini.add_argument('puntada_lateral', type=inputs.boolean, help='puntada_lateral')
 parser_wini.add_argument('fiebre', type=inputs.boolean, help='fiebre')
 parser_wini.add_argument('dificultad_respiratoria', type=inputs.boolean, help='dificultad_respiratoria')
@@ -46,16 +48,22 @@ class Predict(Resource):
     def post(self):
         args = parser_wini.parse_args()
         image = args['image']
-        puntada_lateral = args['puntada_lateral']
-        fiebre = args['fiebre']
-        dificultad_respiratoria = args['dificultad_respiratoria']
+        id = args['id_image']
+        puntada_lateral = 1 if args['puntada_lateral'] else 0
+        fiebre = 1 if args['fiebre'] else 0
+        dificultad_respiratoria = 1 if args['dificultad_respiratoria'] else 0
 
+        if exists_id ("csv/wini.csv", id):
+            return response_generation({"message": "ERROR! existing ID"}, 418)
+        
+        is_int = isinstance(id, int)
+        if not is_int:
+            return response_generation({"message": "ERROR! ID is not int"}, 418)
+        
         """Aca deberia llamar a la funcion que guarda la imagen en el fileserver y de
             alguna manera obtener la direccion donde se guarda en el fileserver.
-        
-        if not utils.exists_id("test.csv", 1):
-            print("no existe")
         """
+        append_predict_wini(id, "ruta", puntada_lateral, fiebre, dificultad_respiratoria)
         if image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
             image.save("images/image.png")
             response_data = {}
