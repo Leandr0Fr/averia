@@ -1,5 +1,4 @@
 import pandas as pd
-# falta codigo defensivo a todas las def
 
 
 def exists_id(csv, id):

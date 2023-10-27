@@ -1,7 +1,6 @@
 import numpy as np
 import tensorflow
 from PIL import Image
-import os
 
 
 def prediction_tumor():
