@@ -1,6 +1,6 @@
 from flask_restx import Resource, Namespace, reqparse, inputs
 from .response_generation import response_generation
-from .utils import *
+from .connected_csv import *
 
 ns_feedback = Namespace("feedback")
 # Define un analizador de solicitud para manejar la carga de archivos

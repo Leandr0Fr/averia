@@ -2,7 +2,7 @@ from flask_restx import Resource, Namespace, reqparse, inputs
 from .response_generation import response_generation
 from werkzeug.datastructures import FileStorage
 from .model import prediction_tumor, prediction_pneumonia
-from .utils import *
+from .connected_csv import *
 import os
 
 ns_predict = Namespace("predict")
