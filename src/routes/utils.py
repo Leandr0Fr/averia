@@ -12,7 +12,7 @@ def append_predict_wini(id, imagen, puntada_lateral, fiebre, dificultad_respirat
                              'pneumonia' : [''], 'no_pneumonia' : ['']})
     
     df = pd.concat([df, new_row], ignore_index=True)
-    df.to_csv('csv/wini.csv', index=False)
+    df.to_csv('csv/wini.csv', index=False, float_format='%.0f')
 
 def append_feedback_wini(id, pneumonia, no_pneumonia):
     df = pd.read_csv("csv/wini.csv")
@@ -29,7 +29,7 @@ def append_predict_fred(id, imagen, debilidad_focal, convulsiones, perdida_visua
                              'glioma' : [''], 'meningioma' : [''], 'pituitary' : [''], 'no_tumor' : ['']})
     
     df = pd.concat([df, new_row], ignore_index=True)
-    df.to_csv('csv/fred.csv', index=False)
+    df.to_csv('csv/fred.csv', index=False, float_format='%.0f')
 
 def append_feedback_fred(id, glioma, meningioma, pituitary, no_tumor):
     df = pd.read_csv("csv/fred.csv")

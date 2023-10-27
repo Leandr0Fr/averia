@@ -9,6 +9,7 @@ ns_predict = Namespace("predict")
 # Define un analizador de solicitud para manejar la carga de archivos
 parser_fred = reqparse.RequestParser()
 parser_fred.add_argument('image', type=FileStorage, location='files', required=True, help='Image file')
+parser_fred.add_argument('id_image', type=int, help='Id_image')
 parser_fred.add_argument('debilidad_focal', type=inputs.boolean, help='debilidad_focal')
 parser_fred.add_argument('convulsiones', type=inputs.boolean, help='convulsiones')
 parser_fred.add_argument('perdida_visual', type=inputs.boolean, help='perdida_visual')
@@ -18,11 +19,19 @@ class Predict(Resource):
     @ns_predict.expect(parser_fred)
     def post(self):
         args = parser_fred.parse_args()
-        debilidad = args['debilidad_focal']
-        convulsiones = args['convulsiones']
-        perdida_visual = args['perdida_visual']
+        debilidad = 1 if args['debilidad_focal'] else 0
+        convulsiones = 1 if args['convulsiones'] else 0
+        perdida_visual = 1 if args['perdida_visual'] else 0
         image = args['image']
+        id = args['id_image']
     
+        if exists_id ("csv/fred.csv", id):
+            return response_generation({"message": "ERROR! existing ID"}, 418)
+        print("A")
+        is_int = isinstance(id, int)
+        if not is_int:
+            return response_generation({"message": "ERROR! ID is not int"}, 418)
+
         if image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
             image.save("images/image.png")
             response_data = {}
@@ -31,6 +40,10 @@ class Predict(Resource):
             for tumor_type, probability in class_probabilities:
                 response_data[tumor_type.lower()] = probability
             
+            """Aca deberia llamar a la funcion que guarda la imagen en el fileserver y de
+            alguna manera obtener la direccion donde    se guarda en el fileserver.
+            """
+            append_predict_fred(id,"ruta", debilidad, convulsiones, perdida_visual)
             return response_generation(response_data, 200)
         else:
             return response_generation({"message" : "I'm a teapot!"}, 418)
@@ -59,11 +72,7 @@ class Predict(Resource):
         is_int = isinstance(id, int)
         if not is_int:
             return response_generation({"message": "ERROR! ID is not int"}, 418)
-        
-        """Aca deberia llamar a la funcion que guarda la imagen en el fileserver y de
-            alguna manera obtener la direccion donde se guarda en el fileserver.
-        """
-        append_predict_wini(id, "ruta", puntada_lateral, fiebre, dificultad_respiratoria)
+
         if image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
             image.save("images/image.png")
             response_data = {}
@@ -72,8 +81,10 @@ class Predict(Resource):
             for type, probability in class_probabilities:
                 response_data[type.lower()] = probability
             
-            print(response_data)
-
+            """Aca deberia llamar a la funcion que guarda la imagen en el fileserver y de
+            alguna manera obtener la direccion donde se guarda en el fileserver.
+            """
+            append_predict_wini(id, "ruta", puntada_lateral, fiebre, dificultad_respiratoria)
             return response_generation(response_data, 200)
         else:
             return response_generation({"message" : "I'm a teapot!"}, 418)
