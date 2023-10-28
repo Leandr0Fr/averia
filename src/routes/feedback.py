@@ -22,7 +22,11 @@ class Feedback(Resource):
         meningioma = 1 if args['meningioma'] else 0
         pituitary = 1 if args['pituitary'] else 0
         no_tumor = 1 if args['no_tumor'] else 0
-
+        
+        is_int = isinstance(id, int)
+        if not is_int:
+            return response_generation({"message": "ERROR! ID is not int"}, 400)
+        
         id = args['id_image']
         if not exists_id("csv/fred.csv", id):
             return response_generation({"message": "ERROR! no exists ID"}, 404)
@@ -48,12 +52,14 @@ class Predict(Resource):
     def post(self):
         args = parser_wini.parse_args()
         id = args['id_image']
-        if not exists_id("csv/wini.csv", id):
-            return response_generation({"message": "ERROR! no exists ID"}, 404)
-
         pneumonia = 1 if args['pneumonia'] else 0
         no_pneumonia = 1 if args['no_pneumonia'] else 0
 
+        is_int = isinstance(id, int)
+        if not is_int:
+            return response_generation({"message": "ERROR! ID is not int"}, 400)
+        if not exists_id("csv/wini.csv", id):
+            return response_generation({"message": "ERROR! no exists ID"}, 404)
         if (pneumonia + no_pneumonia) == 2:
             return response_generation({"message": "ERROR! there is more than one true value"}, 400)
         if (pneumonia + no_pneumonia) == 0:

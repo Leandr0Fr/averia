@@ -31,7 +31,7 @@ class Predict(Resource):
         if image == None:
             return response_generation({"message": "ERROR! image not found"}, 404)
         if exists_id("csv/fred.csv", id):
-            return response_generation({"message": "ERROR! existing ID"}, 404)
+            return response_generation({"message": "ERROR! existing ID"}, 400)
         is_int = isinstance(id, int)
         if not is_int:
             return response_generation({"message": "ERROR! ID is not int"}, 400)
@@ -79,7 +79,7 @@ class Predict(Resource):
         if image == None:
             return response_generation({"message": "ERROR! image not found"}, 404)
         if exists_id("csv/wini.csv", id):
-            return response_generation({"message": "ERROR! existing ID"}, 404)
+            return response_generation({"message": "ERROR! existing ID"}, 400)
 
         is_int = isinstance(id, int)
         if not is_int:
