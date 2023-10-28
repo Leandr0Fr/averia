@@ -2,6 +2,7 @@ from flask import Flask
 from routes.ping import ns_ping
 from routes.predict import ns_predict
 from routes.feedback import ns_feedback
+from routes.download import ns_download
 from flask_restx import Api
 import os
 
@@ -14,8 +15,8 @@ def create_app():
     api.add_namespace(ns_ping)
     api.add_namespace(ns_predict)
     api.add_namespace(ns_feedback)
+    api.add_namespace(ns_download)
     return app
-
 
 app = create_app()
 
