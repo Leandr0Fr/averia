@@ -8,7 +8,7 @@ ns_predict = Namespace("predict")
 # Define un analizador de solicitud para manejar la carga de archivos
 parser_fred = reqparse.RequestParser()
 parser_fred.add_argument('image', type=FileStorage,
-                         location='files', required=True, help='Image file')
+                         location='files', help='Image file')
 parser_fred.add_argument('id_image', type=int, help='Id_image')
 parser_fred.add_argument(
     'debilidad_focal', type=inputs.boolean, help='debilidad_focal')
@@ -16,7 +16,6 @@ parser_fred.add_argument(
     'convulsiones', type=inputs.boolean, help='convulsiones')
 parser_fred.add_argument(
     'perdida_visual', type=inputs.boolean, help='perdida_visual')
-
 
 @ns_predict.route("/fred")
 class Predict(Resource):
@@ -29,9 +28,10 @@ class Predict(Resource):
         image = args['image']
         id = args['id_image']
 
+        if image == None:
+            return response_generation({"message": "ERROR! image not found"}, 404)
         if exists_id("csv/fred.csv", id):
             return response_generation({"message": "ERROR! existing ID"}, 404)
-        print("A")
         is_int = isinstance(id, int)
         if not is_int:
             return response_generation({"message": "ERROR! ID is not int"}, 400)
@@ -56,7 +56,7 @@ class Predict(Resource):
 
 parser_wini = reqparse.RequestParser()
 parser_wini.add_argument('image', type=FileStorage,
-                         location='files', required=True, help='Image file')
+                         location='files', help='Image file')
 parser_wini.add_argument('id_image', type=int, help='Id_image')
 parser_wini.add_argument(
     'puntada_lateral', type=inputs.boolean, help='puntada_lateral')
@@ -75,7 +75,9 @@ class Predict(Resource):
         puntada_lateral = 1 if args['puntada_lateral'] else 0
         fiebre = 1 if args['fiebre'] else 0
         dificultad_respiratoria = 1 if args['dificultad_respiratoria'] else 0
-
+        
+        if image == None:
+            return response_generation({"message": "ERROR! image not found"}, 404)
         if exists_id("csv/wini.csv", id):
             return response_generation({"message": "ERROR! existing ID"}, 404)
 
