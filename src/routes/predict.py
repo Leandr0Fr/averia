@@ -30,11 +30,11 @@ class Predict(Resource):
         id = args['id_image']
 
         if exists_id("csv/fred.csv", id):
-            return response_generation({"message": "ERROR! existing ID"}, 418)
+            return response_generation({"message": "ERROR! existing ID"}, 404)
         print("A")
         is_int = isinstance(id, int)
         if not is_int:
-            return response_generation({"message": "ERROR! ID is not int"}, 418)
+            return response_generation({"message": "ERROR! ID is not int"}, 400)
 
         if image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
             image.save("images/image.png")
@@ -77,11 +77,11 @@ class Predict(Resource):
         dificultad_respiratoria = 1 if args['dificultad_respiratoria'] else 0
 
         if exists_id("csv/wini.csv", id):
-            return response_generation({"message": "ERROR! existing ID"}, 418)
+            return response_generation({"message": "ERROR! existing ID"}, 404)
 
         is_int = isinstance(id, int)
         if not is_int:
-            return response_generation({"message": "ERROR! ID is not int"}, 418)
+            return response_generation({"message": "ERROR! ID is not int"}, 400)
 
         if image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
             image.save("images/image.png")
