@@ -101,3 +101,39 @@ class Feedback(Resource):
             return response_generation({"message": "ERROR! all values is false"}, 400)
         append_feedback_fred(id, quiste, piedra, tumor, normal)
         return response_generation({"message": "POST ACCEPTED"}, 200)
+
+
+'''
+parser_lyso = reqparse.RequestParser()
+parser_lyso.add_argument('id_image', type=int, help='id_image')
+parser_lyso.add_argument('quiste', type=inputs.boolean, help='quiste')
+parser_lyso.add_argument('piedra', type=inputs.boolean, help='piedra')
+parser_lyso.add_argument('tumor', type=inputs.boolean, help='tumor')
+parser_lyso.add_argument('normal', type=inputs.boolean, help='normal')
+
+@ns_feedback.route("/lyso")
+class Feedback(Resource):
+    @ns_feedback.expect(parser_lyso)
+    def post(self):
+        args = parser_lyso.parse_args()
+        id = args['id_image']
+        quiste = 1 if args['quiste'] else 0
+        piedra = 1 if args['piedra'] else 0
+        tumor = 1 if args['tumor'] else 0
+        normal = 1 if args['normal'] else 0
+        
+        is_int = isinstance(id, int)
+        if not is_int:
+            return response_generation({"message": "ERROR! ID is not int"}, 400)
+        
+        id = args['id_image']
+        if not exists_id("csv/lyso/lyso.csv", id):
+            return response_generation({"message": "ERROR! no exists ID"}, 404)
+        if (quiste + piedra + tumor + normal) > 1:
+            return response_generation({"message": "ERROR! there is more than one true value"}, 400)
+        if (quiste + piedra + tumor + normal) == 0:
+            return response_generation({"message": "ERROR! all values is false"}, 400)
+        append_feedback_fred(id, quiste, piedra, tumor, normal)
+        return response_generation({"message": "POST ACCEPTED"}, 200)
+'''
+
