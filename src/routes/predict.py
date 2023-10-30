@@ -1,7 +1,7 @@
 from flask_restx import Resource, Namespace, reqparse, inputs
 from .response_generation import response_generation
 from werkzeug.datastructures import FileStorage
-from .model import prediction_tumor, prediction_pneumonia
+from .model import prediction_tumor, prediction_pneumonia, prediction_kidney
 from .connected_csv import *
 import time
 
@@ -102,3 +102,48 @@ class Predict(Resource):
 
 def get_millsec():
     return str(int(round(time.time() * 1000)))
+
+parser_lysoform = reqparse.RequestParser()
+parser_lysoform .add_argument('image', type=FileStorage,
+                         location='files', help='Image file')
+parser_lysoform .add_argument('id_image', type=int, help='Id_image')
+parser_lysoform .add_argument(
+    'placeholder1', type=inputs.boolean, help='placeholder1')
+parser_lysoform .add_argument(
+    'placeholder2', type=inputs.boolean, help='placeholder2')
+parser_lysoform .add_argument(
+    'placeholder3', type=inputs.boolean, help='placeholder3')
+
+@ns_predict.route("/lysoform")
+class Predict(Resource):
+    @ns_predict.expect(parser_lysoform)
+    def post(self):
+        args = parser_lysoform.parse_args()
+        placeholder1 = 1 if args['placeholder1'] else 0
+        placeholder2 = 1 if args['placeholder2'] else 0
+        placeholder3 = 1 if args['placeholder3'] else 0
+        image = args['image']
+        id = args['id_image']
+
+        if image == None:
+            return response_generation({"message": "ERROR! image not found"}, 404)
+        if exists_id("csv/lysoform/lysoform.csv", id):
+            return response_generation({"message": "ERROR! existing ID"}, 400)
+        is_int = isinstance(id, int)
+        if not is_int:
+            return response_generation({"message": "ERROR! ID is not int"}, 400)
+
+        if image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
+            name = get_millsec()
+            image.save(f"csv/lysoform/images/{name}.png")
+            response_data = {}
+            class_probabilities = prediction_kidney(name) 
+
+            for class_type, probability in class_probabilities:
+                response_data[class_type.lower()] = probability
+
+            append_predict_lysoform(id, f"images/{name}.png", placeholder1,
+                                placeholder2, placeholder3)
+            return response_generation(response_data, 200)
+        else:
+            return response_generation({"message": "I'm a teapot!"}, 418)

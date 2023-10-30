@@ -21,11 +21,12 @@ class Download(Resource):
         file = "download/wini.zip"
         return send_file(file, as_attachment=True, download_name="wini.zip")
 
-@ns_download.route("/x")
+@ns_download.route("/lysoform")
 class Download(Resource):
     def get(self):
-        archivo = "images/placeholder.txt"
-        return send_file(archivo, as_attachment=True, download_name="placeholder.txt")
+        to_zip("csv/lysoform", "lysoform")
+        file = "download/lysoform.zip"
+        return send_file(file, as_attachment=True, download_name="lysoform.zip")
 
 def to_zip(route, name):
     folder = route

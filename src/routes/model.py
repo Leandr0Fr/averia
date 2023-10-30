@@ -34,3 +34,17 @@ def prediction_pneumonia(name):
     predict = model.predict(np.expand_dims(img_array, axis=0))[0]
     probabilities = [(prob * 100) for prob in predict]
     return list(zip(class_labels, probabilities))
+
+def prediction_kidney(name):
+    # Carga el modelo.
+    model = tensorflow.keras.models.load_model("models_ia/cnn-riniones.h5")
+    # Transforma la imagen para que coincidan con el modelo.
+    img = Image.open(f"csv/lysoform/images/{name}.png").convert("L")
+    img = img.resize((224, 224))
+    img_array = np.array(img)
+    img_array = img_array / 255
+    # Realiza la predicción
+    class_labels = ["quiste", "piedra", "tumor", "normal"]
+    predict = model.predict(np.expand_dims(img_array, axis=0))[0]
+    probabilities = [(prob * 100) for prob in predict]
+    return list(zip(class_labels, probabilities))

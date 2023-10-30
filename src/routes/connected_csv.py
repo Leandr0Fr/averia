@@ -6,6 +6,7 @@ def exists_id(csv, id):
     list_id = df['id'].tolist()
     return id in list_id
 
+#wini
 
 def append_predict_wini(id, imagen, puntada_lateral, fiebre, dificultad_respiratoria):
     df = pd.read_csv("csv/wini/wini.csv")
@@ -25,6 +26,7 @@ def append_feedback_wini(id, pneumonia, no_pneumonia):
 
     df.to_csv("csv/wini/wini.csv", index=False, float_format='%.0f')
 
+#fred
 
 def append_predict_fred(id, imagen, debilidad_focal, convulsiones, perdida_visual):
     df = pd.read_csv("csv/fred/fred.csv")
@@ -45,3 +47,25 @@ def append_feedback_fred(id, glioma, meningioma, pituitary, no_tumor):
     df.loc[df['id'] == id, 'no_tumor'] = no_tumor
 
     df.to_csv("csv/fred/fred.csv", index=False, float_format='%.0f')
+
+#lyso
+
+def append_predict_lysoform(id, imagen, placeholder1, placeholder2, placeholder3):
+    df = pd.read_csv("csv/lysoform/lysoform.csv")
+    new_row = pd.DataFrame({'id': [id], 'imagen': [imagen], 'placeholder1': [placeholder1],
+                            'placeholder2': [placeholder2], 'placeholder3': [placeholder3],
+                            'quiste': [''], 'piedra': [''], 'tumor': [''], 'normal': ['']})
+    
+    df = pd.concat([df, new_row], ignore_index=True)
+    df.to_csv('csv/lysoform/lysoform.csv', index=False, float_format='%.0f')
+
+
+def append_feedback_lysoform(id, quiste, piedra, tumor, normal):
+    df = pd.read_csv("csv/lysoform/lysoform.csv")
+
+    df.loc[df['id'] == id, 'quiste'] = quiste
+    df.loc[df['id'] == id, 'piedra'] = piedra
+    df.loc[df['id'] == id, 'tumor'] = tumor
+    df.loc[df['id'] == id, 'normal'] = normal
+
+    df.to_csv("csv/lysoform/lysoform.csv", index=False, float_format='%.0f')
