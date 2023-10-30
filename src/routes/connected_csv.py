@@ -51,21 +51,21 @@ def append_feedback_fred(id, glioma, meningioma, pituitary, no_tumor):
 #lyso
 
 def append_predict_lysoform(id, imagen, placeholder1, placeholder2, placeholder3):
-    df = pd.read_csv("csv/lysoform/lysoform.csv")
+    df = pd.read_csv("csv/lyso/lyso.csv")
     new_row = pd.DataFrame({'id': [id], 'imagen': [imagen], 'placeholder1': [placeholder1],
                             'placeholder2': [placeholder2], 'placeholder3': [placeholder3],
                             'quiste': [''], 'piedra': [''], 'tumor': [''], 'normal': ['']})
     
     df = pd.concat([df, new_row], ignore_index=True)
-    df.to_csv('csv/lysoform/lysoform.csv', index=False, float_format='%.0f')
+    df.to_csv('csv/lyso/lyso.csv', index=False, float_format='%.0f')
 
 
 def append_feedback_lysoform(id, quiste, piedra, tumor, normal):
-    df = pd.read_csv("csv/lysoform/lysoform.csv")
+    df = pd.read_csv("csv/lyso/lyso.csv")
 
     df.loc[df['id'] == id, 'quiste'] = quiste
     df.loc[df['id'] == id, 'piedra'] = piedra
     df.loc[df['id'] == id, 'tumor'] = tumor
     df.loc[df['id'] == id, 'normal'] = normal
 
-    df.to_csv("csv/lysoform/lysoform.csv", index=False, float_format='%.0f')
+    df.to_csv("csv/lyso/lyso.csv", index=False, float_format='%.0f')

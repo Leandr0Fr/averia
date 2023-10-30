@@ -69,19 +69,19 @@ class Predict(Resource):
         return response_generation({"message": "POST ACCEPTED"}, 200)
     
 
-parser_lysoform = reqparse.RequestParser()
-parser_lysoform.add_argument('id_image', type=int, help='id_image')
-parser_lysoform.add_argument('quiste', type=inputs.boolean, help='quiste')
-parser_lysoform.add_argument('piedra', type=inputs.boolean, help='piedra')
-parser_lysoform.add_argument('tumor', type=inputs.boolean, help='tumor')
-parser_lysoform.add_argument('normal', type=inputs.boolean, help='normal')
+parser_lyso = reqparse.RequestParser()
+parser_lyso.add_argument('id_image', type=int, help='id_image')
+parser_lyso.add_argument('quiste', type=inputs.boolean, help='quiste')
+parser_lyso.add_argument('piedra', type=inputs.boolean, help='piedra')
+parser_lyso.add_argument('tumor', type=inputs.boolean, help='tumor')
+parser_lyso.add_argument('normal', type=inputs.boolean, help='normal')
 
 
-@ns_feedback.route("/lysoform")
+@ns_feedback.route("/lyso")
 class Feedback(Resource):
-    @ns_feedback.expect(parser_lysoform)
+    @ns_feedback.expect(parser_lyso)
     def post(self):
-        args = parser_lysoform.parse_args()
+        args = parser_lyso.parse_args()
         id = args['id_image']
         quiste = 1 if args['quiste'] else 0
         piedra = 1 if args['piedra'] else 0
@@ -93,7 +93,7 @@ class Feedback(Resource):
             return response_generation({"message": "ERROR! ID is not int"}, 400)
         
         id = args['id_image']
-        if not exists_id("csv/lysoform/lysoform.csv", id):
+        if not exists_id("csv/lyso/lyso.csv", id):
             return response_generation({"message": "ERROR! no exists ID"}, 404)
         if (quiste + piedra + tumor + normal) > 1:
             return response_generation({"message": "ERROR! there is more than one true value"}, 400)

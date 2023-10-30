@@ -100,25 +100,23 @@ class Predict(Resource):
         else:
             return response_generation({"message": "I'm a teapot!"}, 418)
 
-def get_millsec():
-    return str(int(round(time.time() * 1000)))
 
-parser_lysoform = reqparse.RequestParser()
-parser_lysoform .add_argument('image', type=FileStorage,
+parser_lyso = reqparse.RequestParser()
+parser_lyso .add_argument('image', type=FileStorage,
                          location='files', help='Image file')
-parser_lysoform .add_argument('id_image', type=int, help='Id_image')
-parser_lysoform .add_argument(
+parser_lyso .add_argument('id_image', type=int, help='Id_image')
+parser_lyso .add_argument(
     'placeholder1', type=inputs.boolean, help='placeholder1')
-parser_lysoform .add_argument(
+parser_lyso .add_argument(
     'placeholder2', type=inputs.boolean, help='placeholder2')
-parser_lysoform .add_argument(
+parser_lyso .add_argument(
     'placeholder3', type=inputs.boolean, help='placeholder3')
 
-@ns_predict.route("/lysoform")
+@ns_predict.route("/lyso")
 class Predict(Resource):
-    @ns_predict.expect(parser_lysoform)
+    @ns_predict.expect(parser_lyso)
     def post(self):
-        args = parser_lysoform.parse_args()
+        args = parser_lyso.parse_args()
         placeholder1 = 1 if args['placeholder1'] else 0
         placeholder2 = 1 if args['placeholder2'] else 0
         placeholder3 = 1 if args['placeholder3'] else 0
@@ -127,7 +125,7 @@ class Predict(Resource):
 
         if image == None:
             return response_generation({"message": "ERROR! image not found"}, 404)
-        if exists_id("csv/lysoform/lysoform.csv", id):
+        if exists_id("csv/lyso/lyso.csv", id):
             return response_generation({"message": "ERROR! existing ID"}, 400)
         is_int = isinstance(id, int)
         if not is_int:
@@ -135,7 +133,7 @@ class Predict(Resource):
 
         if image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
             name = get_millsec()
-            image.save(f"csv/lysoform/images/{name}.png")
+            image.save(f"csv/lyso/images/{name}.png")
             response_data = {}
             class_probabilities = prediction_kidney(name) 
 
@@ -147,3 +145,7 @@ class Predict(Resource):
             return response_generation(response_data, 200)
         else:
             return response_generation({"message": "I'm a teapot!"}, 418)
+
+def get_millsec():
+    return str(int(round(time.time() * 1000)))
+

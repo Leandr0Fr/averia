@@ -39,7 +39,7 @@ def prediction_kidney(name):
     # Carga el modelo.
     model = tensorflow.keras.models.load_model("models_ia/cnn-riniones.h5")
     # Transforma la imagen para que coincidan con el modelo.
-    img = Image.open(f"csv/lysoform/images/{name}.png").convert("L")
+    img = Image.open(f"csv/lyso/images/{name}.png").convert("L")
     img = img.resize((224, 224))
     img_array = np.array(img)
     img_array = img_array / 255
