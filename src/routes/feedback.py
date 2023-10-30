@@ -93,7 +93,7 @@ class Feedback(Resource):
             return response_generation({"message": "ERROR! ID is not int"}, 400)
         
         id = args['id_image']
-        if not exists_id("csv/fred/fred.csv", id):
+        if not exists_id("csv/lysoform/lysoform.csv", id):
             return response_generation({"message": "ERROR! no exists ID"}, 404)
         if (quiste + piedra + tumor + normal) > 1:
             return response_generation({"message": "ERROR! there is more than one true value"}, 400)
