@@ -99,7 +99,7 @@ class Feedback(Resource):
             return response_generation({"message": "ERROR! there is more than one true value"}, 400)
         if (quiste + piedra + tumor + normal) == 0:
             return response_generation({"message": "ERROR! all values is false"}, 400)
-        append_feedback_fred(id, quiste, piedra, tumor, normal)
+        append_feedback_lyso(id, quiste, piedra, tumor, normal)
         return response_generation({"message": "POST ACCEPTED"}, 200)
 
 

@@ -140,7 +140,7 @@ class Predict(Resource):
             for class_type, probability in class_probabilities:
                 response_data[class_type.lower()] = probability
 
-            append_predict_lysoform(id, f"images/{name}.png", placeholder1,
+            append_predict_lyso(id, f"images/{name}.png", placeholder1,
                                 placeholder2, placeholder3)
             return response_generation(response_data, 200)
         else:

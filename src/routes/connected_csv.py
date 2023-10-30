@@ -50,7 +50,7 @@ def append_feedback_fred(id, glioma, meningioma, pituitary, no_tumor):
 
 #lyso
 
-def append_predict_lysoform(id, imagen, placeholder1, placeholder2, placeholder3):
+def append_predict_lyso(id, imagen, placeholder1, placeholder2, placeholder3):
     df = pd.read_csv("csv/lyso/lyso.csv")
     new_row = pd.DataFrame({'id': [id], 'imagen': [imagen], 'placeholder1': [placeholder1],
                             'placeholder2': [placeholder2], 'placeholder3': [placeholder3],
@@ -60,7 +60,7 @@ def append_predict_lysoform(id, imagen, placeholder1, placeholder2, placeholder3
     df.to_csv('csv/lyso/lyso.csv', index=False, float_format='%.0f')
 
 
-def append_feedback_lysoform(id, quiste, piedra, tumor, normal):
+def append_feedback_lyso(id, quiste, piedra, tumor, normal):
     df = pd.read_csv("csv/lyso/lyso.csv")
 
     df.loc[df['id'] == id, 'quiste'] = quiste
