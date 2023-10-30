@@ -28,7 +28,7 @@ class Feedback(Resource):
             return response_generation({"message": "ERROR! ID is not int"}, 400)
         
         id = args['id_image']
-        if not exists_id("csv/fred.csv", id):
+        if not exists_id("csv/fred/fred.csv", id):
             return response_generation({"message": "ERROR! no exists ID"}, 404)
         if (glioma + meningioma + pituitary + no_tumor) > 1:
             return response_generation({"message": "ERROR! there is more than one true value"}, 400)
@@ -58,7 +58,7 @@ class Predict(Resource):
         is_int = isinstance(id, int)
         if not is_int:
             return response_generation({"message": "ERROR! ID is not int"}, 400)
-        if not exists_id("csv/wini.csv", id):
+        if not exists_id("csv/wini/wini.csv", id):
             return response_generation({"message": "ERROR! no exists ID"}, 404)
         if (pneumonia + no_pneumonia) == 2:
             return response_generation({"message": "ERROR! there is more than one true value"}, 400)

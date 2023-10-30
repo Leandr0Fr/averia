@@ -3,10 +3,10 @@ import tensorflow
 from PIL import Image
 
 
-def prediction_tumor():
+def prediction_tumor(name):
     # Carga el modelo.
     model = tensorflow.keras.models.load_model("models_ia/tumor_model.h5")
-    img = Image.open("images/image.png").convert("L")
+    img = Image.open(f"csv/fred/images/{name}.png").convert("L")
     # Transforma la imagen para que coincidan con el modelo.
     img = img.resize((224, 224))
     img = np.array(img)
@@ -21,11 +21,11 @@ def prediction_tumor():
     return list(zip(class_labels, probabilities))
 
 
-def prediction_pneumonia():
+def prediction_pneumonia(name):
     # Carga el modelo.
     model = tensorflow.keras.models.load_model("models_ia/neumonia-resnet.h5")
     # Transforma la imagen para que coincidan con el modelo.
-    img = Image.open("images/image.png").convert("RGB")
+    img = Image.open(f"csv/wini/images/{name}.png").convert("RGB")
     img = img.resize((224, 224))
     img_array = np.array(img)
     img_array = img_array / 255

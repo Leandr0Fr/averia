@@ -3,6 +3,7 @@ from .response_generation import response_generation
 from werkzeug.datastructures import FileStorage
 from .model import prediction_tumor, prediction_pneumonia
 from .connected_csv import *
+import time
 
 ns_predict = Namespace("predict")
 # Define un analizador de solicitud para manejar la carga de archivos
@@ -30,24 +31,22 @@ class Predict(Resource):
 
         if image == None:
             return response_generation({"message": "ERROR! image not found"}, 404)
-        if exists_id("csv/fred.csv", id):
+        if exists_id("csv/fred/fred.csv", id):
             return response_generation({"message": "ERROR! existing ID"}, 400)
         is_int = isinstance(id, int)
         if not is_int:
             return response_generation({"message": "ERROR! ID is not int"}, 400)
 
         if image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-            image.save("images/image.png")
+            name = get_millsec()
+            image.save(f"csv/fred/images/{name}.png")
             response_data = {}
-            class_probabilities = prediction_tumor()
+            class_probabilities = prediction_tumor(name)
 
             for tumor_type, probability in class_probabilities:
                 response_data[tumor_type.lower()] = probability
 
-            """Aca deberia llamar a la funcion que guarda la imagen en el fileserver y de
-            alguna manera obtener la direccion donde    se guarda en el fileserver.
-            """
-            append_predict_fred(id, "ruta", debilidad,
+            append_predict_fred(id, f"images/{name}.png", debilidad,
                                 convulsiones, perdida_visual)
             return response_generation(response_data, 200)
         else:
@@ -78,26 +77,28 @@ class Predict(Resource):
         
         if image == None:
             return response_generation({"message": "ERROR! image not found"}, 404)
-        if exists_id("csv/wini.csv", id):
+        if exists_id("csv/wini/wini.csv", id):
             return response_generation({"message": "ERROR! existing ID"}, 400)
 
         is_int = isinstance(id, int)
         if not is_int:
             return response_generation({"message": "ERROR! ID is not int"}, 400)
+        
 
         if image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-            image.save("images/image.png")
+            name = get_millsec()
+            image.save(f"csv/wini/images/{name}.png")
             response_data = {}
-            class_probabilities = prediction_pneumonia()
+            class_probabilities = prediction_pneumonia(name)
 
             for type, probability in class_probabilities:
                 response_data[type.lower()] = probability
 
-            """Aca deberia llamar a la funcion que guarda la imagen en el fileserver y de
-            alguna manera obtener la direccion donde se guarda en el fileserver.
-            """
-            append_predict_wini(id, "ruta", puntada_lateral,
+            append_predict_wini(id, f"images/{name}.png", puntada_lateral,
                                 fiebre, dificultad_respiratoria)
             return response_generation(response_data, 200)
         else:
             return response_generation({"message": "I'm a teapot!"}, 418)
+
+def get_millsec():
+    return str(int(round(time.time() * 1000)))
