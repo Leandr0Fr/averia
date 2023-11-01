@@ -20,6 +20,7 @@ def append_predict_wini(id, imagen, puntada_lateral, fiebre, dificultad_respirat
 
 def append_feedback_wini(id, pneumonia, no_pneumonia, comment):
     df = pd.read_csv(CSV_WINI)
+    df['comment'] = df['comment'].astype(str)
 
     df.loc[df['id'] == id, 'pneumonia'] = pneumonia
     df.loc[df['id'] == id, 'no_pneumonia'] = no_pneumonia
@@ -41,7 +42,7 @@ def append_predict_fred(id, imagen, debilidad_focal, convulsiones, perdida_visua
 
 def append_feedback_fred(id, glioma, meningioma, pituitary, no_tumor, comment):
     df = pd.read_csv(CSV_FRED)
-
+    df['comment'] = df['comment'].astype(str)
     df.loc[df['id'] == id, 'glioma'] = glioma
     df.loc[df['id'] == id, 'meningioma'] = meningioma
     df.loc[df['id'] == id, 'pituitary'] = pituitary
@@ -65,7 +66,7 @@ def append_predict_lyso(id, imagen, hermaturia, dolor_lumbar, dolor_abdominal, f
 
 def append_feedback_lyso(id, quiste, piedra, tumor, normal, comment):
     df = pd.read_csv(CSV_LYSO)
-
+    df['comment'] = df['comment'].astype(str)
     df.loc[df['id'] == id, 'quiste'] = quiste
     df.loc[df['id'] == id, 'piedra'] = piedra
     df.loc[df['id'] == id, 'tumor'] = tumor
