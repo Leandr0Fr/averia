@@ -12,17 +12,18 @@ def append_predict_wini(id, imagen, puntada_lateral, fiebre, dificultad_respirat
     df = pd.read_csv(CSV_WINI)
     new_row = pd.DataFrame({'id': [id], 'imagen': [imagen], 'puntada_lateral': [puntada_lateral],
                             'fiebre': [fiebre], 'dificultad_respiratoria': [dificultad_respiratoria],
-                            'pneumonia': [''], 'no_pneumonia': ['']})
+                            'pneumonia': [''], 'no_pneumonia': [''], 'comment': ['']})
 
     df = pd.concat([df, new_row], ignore_index=True)
     df.to_csv(CSV_WINI, index=False, float_format='%.0f')
 
 
-def append_feedback_wini(id, pneumonia, no_pneumonia):
+def append_feedback_wini(id, pneumonia, no_pneumonia, comment):
     df = pd.read_csv(CSV_WINI)
 
     df.loc[df['id'] == id, 'pneumonia'] = pneumonia
     df.loc[df['id'] == id, 'no_pneumonia'] = no_pneumonia
+    df.loc[df['id'] == id, 'comment'] = comment
 
     df.to_csv(CSV_WINI, index=False, float_format='%.0f')
 
@@ -32,19 +33,20 @@ def append_predict_fred(id, imagen, debilidad_focal, convulsiones, perdida_visua
     df = pd.read_csv(CSV_FRED)
     new_row = pd.DataFrame({'id': [id], 'imagen': [imagen], 'debilidad_focal': [debilidad_focal],
                             'convulsiones': [convulsiones], 'perdida_visual': [perdida_visual],
-                            'glioma': [''], 'meningioma': [''], 'pituitary': [''], 'no_tumor': ['']})
+                            'glioma': [''], 'meningioma': [''], 'pituitary': [''], 'no_tumor': [''], 'comment': ['']})
 
     df = pd.concat([df, new_row], ignore_index=True)
     df.to_csv(CSV_FRED, index=False, float_format='%.0f')
 
 
-def append_feedback_fred(id, glioma, meningioma, pituitary, no_tumor):
+def append_feedback_fred(id, glioma, meningioma, pituitary, no_tumor, comment):
     df = pd.read_csv(CSV_FRED)
 
     df.loc[df['id'] == id, 'glioma'] = glioma
     df.loc[df['id'] == id, 'meningioma'] = meningioma
     df.loc[df['id'] == id, 'pituitary'] = pituitary
     df.loc[df['id'] == id, 'no_tumor'] = no_tumor
+    df.loc[df['id'] == id, 'comment'] = comment
 
     df.to_csv(CSV_FRED, index=False, float_format='%.0f')
 
@@ -55,19 +57,20 @@ def append_predict_lyso(id, imagen, hermaturia, dolor_lumbar, dolor_abdominal, f
     new_row = pd.DataFrame({'id': [id], 'imagen': [imagen], 'hermaturia': [hermaturia],
                             'dolor_lumbar': [dolor_lumbar], 'dolor_abdominal': [dolor_abdominal],
                             'fiebre': [fiebre], 'perdida_peso': [perdida_peso],
-                            'quiste': [''], 'piedra': [''], 'tumor': [''], 'normal': ['']})
+                            'quiste': [''], 'piedra': [''], 'tumor': [''], 'normal': [''] , 'comment': ['']})
     
     df = pd.concat([df, new_row], ignore_index=True)
     df.to_csv(CSV_LYSO, index=False, float_format='%.0f')
 
 
-def append_feedback_lyso(id, quiste, piedra, tumor, normal):
+def append_feedback_lyso(id, quiste, piedra, tumor, normal, comment):
     df = pd.read_csv(CSV_LYSO)
 
     df.loc[df['id'] == id, 'quiste'] = quiste
     df.loc[df['id'] == id, 'piedra'] = piedra
     df.loc[df['id'] == id, 'tumor'] = tumor
     df.loc[df['id'] == id, 'normal'] = normal
+    df.loc[df['id'] == id, 'comment'] = comment
 
     df.to_csv(CSV_LYSO, index=False, float_format='%.0f')
 
