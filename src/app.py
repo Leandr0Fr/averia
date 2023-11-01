@@ -3,6 +3,7 @@ from routes.ping import ns_ping
 from routes.predict import ns_predict
 from routes.feedback import ns_feedback
 from routes.download import ns_download
+from routes.delete import ns_delete
 from flask_restx import Api
 import os
 
@@ -16,6 +17,7 @@ def create_app():
     api.add_namespace(ns_predict)
     api.add_namespace(ns_feedback)
     api.add_namespace(ns_download)
+    api.add_namespace(ns_delete)
     return app
 
 app = create_app()
