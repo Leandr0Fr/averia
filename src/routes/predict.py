@@ -86,7 +86,7 @@ class Predict(Resource):
         if image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
             name = get_millsec()
 
-            image.save(f"{IMAGES_FRED}/{name}.png")
+            image.save(f"{IMAGES_WINI}/{name}.png")
             response_data = {}
             class_probabilities = prediction_pneumonia(name)
 
