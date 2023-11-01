@@ -19,7 +19,7 @@ class Download(Resource):
 class Download(Resource):
     def get(self):
         to_zip(FOLDER_WINI, "wini")
-        file = DOWNLOAD_FRED_ROUTE
+        file = DOWNLOAD_WINI_ROUTE
         return send_file(file, as_attachment=True, download_name="wini.zip")
 
 @ns_download.route("/lyso")
