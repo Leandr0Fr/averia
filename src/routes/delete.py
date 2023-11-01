@@ -17,7 +17,8 @@ class Download(Resource):
             return response_generation({"message": "ERROR! ID is not int"}, 400)
         if not exists_id("csv/fred/fred.csv", id):
             return response_generation({"message": "ERROR! no exists ID"}, 404)
-        #eliminar del csv
+        
+        delete_id(id, "csv/fred/fred.csv")
         return response_generation({"message": f"DELETE ID: {id}"}, 200)
 
 parser_wini = reqparse.RequestParser()
@@ -33,7 +34,8 @@ class Download(Resource):
             return response_generation({"message": "ERROR! ID is not int"}, 400)
         if not exists_id("csv/wini/wini.csv", id):
             return response_generation({"message": "ERROR! no exists ID"}, 404)
-        #eliminar del csv
+        
+        delete_id(id, "csv/wini/wini.csv")
         return response_generation({"message": f"DELETE ID: {id}"}, 200)
 
 parser_lyso = reqparse.RequestParser()
@@ -49,5 +51,6 @@ class Download(Resource):
             return response_generation({"message": "ERROR! ID is not int"}, 400)
         if not exists_id("csv/lyso/lyso.csv", id):
             return response_generation({"message": "ERROR! no exists ID"}, 404)
-        #eliminar del csv
+        
+        delete_id(id, "csv/lyso/lyso.csv")
         return response_generation({"message": f"DELETE ID: {id}"}, 200)

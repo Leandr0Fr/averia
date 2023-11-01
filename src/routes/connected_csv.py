@@ -69,3 +69,10 @@ def append_feedback_lyso(id, quiste, piedra, tumor, normal):
     df.loc[df['id'] == id, 'normal'] = normal
 
     df.to_csv("csv/lyso/lyso.csv", index=False, float_format='%.0f')
+
+#delete
+def delete_id(id, route_csv):
+    df = pd.read_csv(route_csv)
+    df = df[df['id'] != id]
+
+    df.to_csv(route_csv, index=False, float_format='%.0f')
