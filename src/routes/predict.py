@@ -105,20 +105,27 @@ parser_lyso .add_argument('image', type=FileStorage,
                          location='files', help='Image file')
 parser_lyso .add_argument('id_image', type=int, help='Id_image')
 parser_lyso .add_argument(
-    'placeholder1', type=inputs.boolean, help='placeholder1')
+    'hermaturia', type=inputs.boolean, help='hermaturia')
 parser_lyso .add_argument(
-    'placeholder2', type=inputs.boolean, help='placeholder2')
+    'dolor_lumbar', type=inputs.boolean, help='dolor_lumbar')
 parser_lyso .add_argument(
-    'placeholder3', type=inputs.boolean, help='placeholder3')
+    'dolor_abdominal', type=inputs.boolean, help='dolor_abdominal')
+parser_lyso .add_argument(
+    'fiebre', type=inputs.boolean, help='fiebre')
+parser_lyso .add_argument(
+    'perdida_peso', type=inputs.boolean, help='perdida_peso')
 
 @ns_predict.route("/lyso")
 class Predict(Resource):
     @ns_predict.expect(parser_lyso)
     def post(self):
         args = parser_lyso.parse_args()
-        placeholder1 = 1 if args['placeholder1'] else 0
-        placeholder2 = 1 if args['placeholder2'] else 0
-        placeholder3 = 1 if args['placeholder3'] else 0
+        hermaturia = 1 if args['hermaturia'] else 0
+        dolor_lumbar = 1 if args['dolor_lumbar'] else 0
+        dolor_abdominal = 1 if args['dolor_abdominal'] else 0
+        fiebre = 1 if args['fiebre'] else 0
+        perdida_peso = 1 if args['perdida_peso'] else 0
+
         image = args['image']
         id = args['id_image']
 
@@ -139,8 +146,8 @@ class Predict(Resource):
             for class_type, probability in class_probabilities:
                 response_data[class_type.lower()] = probability
 
-            append_predict_lyso(id, f"images/{name}.png", placeholder1,
-                                placeholder2, placeholder3)
+            append_predict_lyso(id, f"images/{name}.png", hermaturia,
+                                dolor_lumbar, dolor_abdominal, fiebre, perdida_peso)
             return response_generation(response_data, 200)
         else:
             return response_generation({"message": "I'm a teapot!"}, 418)

@@ -50,10 +50,11 @@ def append_feedback_fred(id, glioma, meningioma, pituitary, no_tumor):
 
 #lyso
 
-def append_predict_lyso(id, imagen, placeholder1, placeholder2, placeholder3):
+def append_predict_lyso(id, imagen, hermaturia, dolor_lumbar, dolor_abdominal, fiebre, perdida_peso):
     df = pd.read_csv(CSV_LYSO)
-    new_row = pd.DataFrame({'id': [id], 'imagen': [imagen], 'placeholder1': [placeholder1],
-                            'placeholder2': [placeholder2], 'placeholder3': [placeholder3],
+    new_row = pd.DataFrame({'id': [id], 'imagen': [imagen], 'hermaturia': [hermaturia],
+                            'dolor_lumbar': [dolor_lumbar], 'dolor_abdominal': [dolor_abdominal],
+                            'fiebre': [fiebre], 'perdida_peso': [perdida_peso],
                             'quiste': [''], 'piedra': [''], 'tumor': [''], 'normal': ['']})
     
     df = pd.concat([df, new_row], ignore_index=True)
