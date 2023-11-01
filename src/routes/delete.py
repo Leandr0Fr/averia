@@ -7,7 +7,7 @@ ns_delete = Namespace("delete")
 parser_fred = reqparse.RequestParser()
 parser_fred.add_argument('id', type=int, help='id')
 @ns_delete.route("/fred")
-class Download(Resource):
+class Delete(Resource):
     @ns_delete.expect(parser_fred)
     def delete(self):
         args = parser_fred.parse_args()
@@ -24,7 +24,7 @@ class Download(Resource):
 parser_wini = reqparse.RequestParser()
 parser_wini.add_argument('id', type=int, help='id')
 @ns_delete.route("/wini")
-class Download(Resource):
+class Delete(Resource):
     @ns_delete.expect(parser_wini)
     def delete(self):
         args = parser_wini.parse_args()
@@ -41,7 +41,7 @@ class Download(Resource):
 parser_lyso = reqparse.RequestParser()
 parser_lyso.add_argument('id', type=int, help='id')
 @ns_delete.route("/lyso")
-class Download(Resource):
+class Delete(Resource):
     @ns_delete.expect(parser_lyso)
     def delete(self):
         args = parser_lyso.parse_args()
@@ -54,3 +54,19 @@ class Download(Resource):
         
         delete_id(id, "csv/lyso/lyso.csv")
         return response_generation({"message": f"DELETE ID: {id}"}, 200)
+    
+parser_all = reqparse.RequestParser()
+parser_all.add_argument('model', type=str, help='name_model')
+@ns_delete.route("/all")
+class Delete(Resource):
+    @ns_delete.expect(parser_all)
+    def delete(self):
+        args = parser_all.parse_args()
+        name = args['model']
+        is_str = isinstance(name, str)
+        if not is_str:
+            return response_generation({"message": "ERROR! name is not string"}, 400)
+        if(name != "wini" and name != "fred" and name != "lyso"):
+            return response_generation({"message": "ERROR! name model not exists"}, 404)
+        delete_all(f"csv/{name}/{name}.csv")
+        return response_generation({"message": f"DELETE ALL ROW: {name}"}, 200)    

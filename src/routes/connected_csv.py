@@ -76,3 +76,9 @@ def delete_id(id, route_csv):
     df = df[df['id'] != id]
 
     df.to_csv(route_csv, index=False, float_format='%.0f')
+
+def delete_all(route_csv):
+    df = pd.read_csv(route_csv)
+    df = pd.DataFrame(columns=df.columns)
+
+    df.to_csv(route_csv, index=False)
