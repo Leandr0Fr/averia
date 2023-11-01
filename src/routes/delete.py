@@ -1,7 +1,7 @@
 from flask_restx import Resource, Namespace, reqparse
 from .response_generation import response_generation
 from .connected_csv import *
-
+from .routes import *
 ns_delete = Namespace("delete")
 
 parser_fred = reqparse.RequestParser()
@@ -15,10 +15,10 @@ class Delete(Resource):
         is_int = isinstance(id, int)
         if not is_int:
             return response_generation({"message": "ERROR! ID is not int"}, 400)
-        if not exists_id("csv/fred/fred.csv", id):
+        if not exists_id(CSV_FRED, id):
             return response_generation({"message": "ERROR! no exists ID"}, 404)
         
-        delete_id(id, "csv/fred/fred.csv", "fred")
+        delete_id(id, CSV_FRED, "fred")
         return response_generation({"message": f"DELETE ID: {id}"}, 200)
 
 parser_wini = reqparse.RequestParser()
@@ -32,10 +32,10 @@ class Delete(Resource):
         is_int = isinstance(id, int)
         if not is_int:
             return response_generation({"message": "ERROR! ID is not int"}, 400)
-        if not exists_id("csv/wini/wini.csv", id):
+        if not exists_id(CSV_WINI, id):
             return response_generation({"message": "ERROR! no exists ID"}, 404)
         
-        delete_id(id, "csv/wini/wini.csv", "wini")
+        delete_id(id, CSV_WINI, "wini")
         return response_generation({"message": f"DELETE ID: {id}"}, 200)
 
 parser_lyso = reqparse.RequestParser()
@@ -49,10 +49,10 @@ class Delete(Resource):
         is_int = isinstance(id, int)
         if not is_int:
             return response_generation({"message": "ERROR! ID is not int"}, 400)
-        if not exists_id("csv/lyso/lyso.csv", id):
+        if not exists_id(CSV_LYSO, id):
             return response_generation({"message": "ERROR! no exists ID"}, 404)
         
-        delete_id(id, "csv/lyso/lyso.csv", "lyso")
+        delete_id(id, CSV_LYSO, "lyso")
         return response_generation({"message": f"DELETE ID: {id}"}, 200)
     
 parser_all = reqparse.RequestParser()

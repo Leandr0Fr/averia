@@ -1,7 +1,7 @@
 from flask_restx import Resource, Namespace, reqparse, inputs
 from .response_generation import response_generation
 from .connected_csv import *
-
+from .routes import *
 ns_feedback = Namespace("feedback")
 # Define un analizador de solicitud para manejar la carga de archivos
 parser_fred = reqparse.RequestParser()
@@ -26,7 +26,7 @@ class Feedback(Resource):
         is_int = isinstance(id, int)
         if not is_int:
             return response_generation({"message": "ERROR! ID is not int"}, 400)
-        if not exists_id("csv/fred/fred.csv", id):
+        if not exists_id(CSV_FRED, id):
             return response_generation({"message": "ERROR! no exists ID"}, 404)
         if (glioma + meningioma + pituitary + no_tumor) > 1:
             return response_generation({"message": "ERROR! there is more than one true value"}, 400)
@@ -56,7 +56,7 @@ class Predict(Resource):
         is_int = isinstance(id, int)
         if not is_int:
             return response_generation({"message": "ERROR! ID is not int"}, 400)
-        if not exists_id("csv/wini/wini.csv", id):
+        if not exists_id(CSV_WINI, id):
             return response_generation({"message": "ERROR! no exists ID"}, 404)
         if (pneumonia + no_pneumonia) == 2:
             return response_generation({"message": "ERROR! there is more than one true value"}, 400)
@@ -89,7 +89,7 @@ class Feedback(Resource):
         is_int = isinstance(id, int)
         if not is_int:
             return response_generation({"message": "ERROR! ID is not int"}, 400)
-        if not exists_id("csv/lyso/lyso.csv", id):
+        if not exists_id(CSV_LYSO, id):
             return response_generation({"message": "ERROR! no exists ID"}, 404)
         if (quiste + piedra + tumor + normal) > 1:
             return response_generation({"message": "ERROR! there is more than one true value"}, 400)

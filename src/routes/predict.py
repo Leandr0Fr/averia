@@ -4,6 +4,7 @@ from werkzeug.datastructures import FileStorage
 from .model import prediction_tumor, prediction_pneumonia, prediction_kidney
 from .connected_csv import *
 import time
+from .routes import *
 
 ns_predict = Namespace("predict")
 # Define un analizador de solicitud para manejar la carga de archivos
@@ -31,15 +32,15 @@ class Predict(Resource):
 
         if image == None:
             return response_generation({"message": "ERROR! image not found"}, 404)
-        if exists_id("csv/fred/fred.csv", id):
+        if exists_id(CSV_FRED, id):
             return response_generation({"message": "ERROR! existing ID"}, 400)
         is_int = isinstance(id, int)
         if not is_int:
             return response_generation({"message": "ERROR! ID is not int"}, 400)
-
         if image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
             name = get_millsec()
-            image.save(f"csv/fred/images/{name}.png")
+
+            image.save(f"{IMAGES_FRED}/{name}.png")
             response_data = {}
             class_probabilities = prediction_tumor(name)
 
@@ -77,17 +78,15 @@ class Predict(Resource):
         
         if image == None:
             return response_generation({"message": "ERROR! image not found"}, 404)
-        if exists_id("csv/wini/wini.csv", id):
+        if exists_id(CSV_WINI, id):
             return response_generation({"message": "ERROR! existing ID"}, 400)
-
         is_int = isinstance(id, int)
         if not is_int:
             return response_generation({"message": "ERROR! ID is not int"}, 400)
-        
-
         if image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
             name = get_millsec()
-            image.save(f"csv/wini/images/{name}.png")
+
+            image.save(f"{IMAGES_FRED}/{name}.png")
             response_data = {}
             class_probabilities = prediction_pneumonia(name)
 
@@ -125,15 +124,15 @@ class Predict(Resource):
 
         if image == None:
             return response_generation({"message": "ERROR! image not found"}, 404)
-        if exists_id("csv/lyso/lyso.csv", id):
+        if exists_id(CSV_LYSO, id):
             return response_generation({"message": "ERROR! existing ID"}, 400)
         is_int = isinstance(id, int)
         if not is_int:
             return response_generation({"message": "ERROR! ID is not int"}, 400)
-
         if image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
             name = get_millsec()
-            image.save(f"csv/lyso/images/{name}.png")
+
+            image.save(f"{IMAGES_LYSO}/{name}.png")
             response_data = {}
             class_probabilities = prediction_kidney(name) 
 
@@ -148,4 +147,3 @@ class Predict(Resource):
 
 def get_millsec():
     return str(int(round(time.time() * 1000)))
-
