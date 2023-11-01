@@ -1,5 +1,5 @@
 import pandas as pd
-
+import os
 
 def exists_id(csv, id):
     df = pd.read_csv(csv)
@@ -71,8 +71,16 @@ def append_feedback_lyso(id, quiste, piedra, tumor, normal):
     df.to_csv("csv/lyso/lyso.csv", index=False, float_format='%.0f')
 
 #delete
-def delete_id(id, route_csv):
+def delete_id(id, route_csv, model):
     df = pd.read_csv(route_csv)
+    
+    row = df[df['id'] == id]
+
+    if not row.empty:
+        image = row['imagen'].values[0]
+        route = f"csv/{model}/{image}"
+        if os.path.exists(route):
+            os.remove(route)
     df = df[df['id'] != id]
 
     df.to_csv(route_csv, index=False, float_format='%.0f')

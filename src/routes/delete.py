@@ -18,7 +18,7 @@ class Delete(Resource):
         if not exists_id("csv/fred/fred.csv", id):
             return response_generation({"message": "ERROR! no exists ID"}, 404)
         
-        delete_id(id, "csv/fred/fred.csv")
+        delete_id(id, "csv/fred/fred.csv", "fred")
         return response_generation({"message": f"DELETE ID: {id}"}, 200)
 
 parser_wini = reqparse.RequestParser()
@@ -35,7 +35,7 @@ class Delete(Resource):
         if not exists_id("csv/wini/wini.csv", id):
             return response_generation({"message": "ERROR! no exists ID"}, 404)
         
-        delete_id(id, "csv/wini/wini.csv")
+        delete_id(id, "csv/wini/wini.csv", "wini")
         return response_generation({"message": f"DELETE ID: {id}"}, 200)
 
 parser_lyso = reqparse.RequestParser()
@@ -52,7 +52,7 @@ class Delete(Resource):
         if not exists_id("csv/lyso/lyso.csv", id):
             return response_generation({"message": "ERROR! no exists ID"}, 404)
         
-        delete_id(id, "csv/lyso/lyso.csv")
+        delete_id(id, "csv/lyso/lyso.csv", "wini")
         return response_generation({"message": f"DELETE ID: {id}"}, 200)
     
 parser_all = reqparse.RequestParser()
