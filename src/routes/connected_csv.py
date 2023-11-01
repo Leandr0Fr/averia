@@ -85,8 +85,15 @@ def delete_id(id, route_csv, model):
 
     df.to_csv(route_csv, index=False, float_format='%.0f')
 
-def delete_all(route_csv):
+def delete_all(route_csv, name):
+    route_images = f"csv/{name}/images"
     df = pd.read_csv(route_csv)
     df = pd.DataFrame(columns=df.columns)
+    for filename in os.listdir(route_images):
+        if filename.endswith('.txt'):
+            continue
+        file_path = os.path.join(route_images, filename)
+        if os.path.isfile(file_path):
+            os.remove(file_path)
 
     df.to_csv(route_csv, index=False)
