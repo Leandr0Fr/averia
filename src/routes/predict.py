@@ -38,7 +38,7 @@ class Predict(Resource):
         if not is_int:
             return response_generation({"message": "ERROR! ID is not int"}, 400)
         if image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-            name = get_millsec()
+            name = str(id)
 
             image.save(f"{IMAGES_FRED}/{name}.png")
             response_data = {}
@@ -84,7 +84,7 @@ class Predict(Resource):
         if not is_int:
             return response_generation({"message": "ERROR! ID is not int"}, 400)
         if image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-            name = get_millsec()
+            name = str(id)
 
             image.save(f"{IMAGES_WINI}/{name}.png")
             response_data = {}
@@ -137,7 +137,7 @@ class Predict(Resource):
         if not is_int:
             return response_generation({"message": "ERROR! ID is not int"}, 400)
         if image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-            name = get_millsec()
+            name = str(id)
 
             image.save(f"{IMAGES_LYSO}/{name}.png")
             response_data = {}
@@ -151,6 +151,3 @@ class Predict(Resource):
             return response_generation(response_data, 200)
         else:
             return response_generation({"message": "I'm a teapot!"}, 418)
-
-def get_millsec():
-    return str(int(round(time.time() * 1000)))
