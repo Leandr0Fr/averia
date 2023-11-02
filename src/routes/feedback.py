@@ -30,8 +30,6 @@ class Feedback(Resource):
             return response_generation({"message": "ERROR! no exists ID"}, 404)
         if (glioma + meningioma + pituitary + no_tumor) > 1:
             return response_generation({"message": "ERROR! there is more than one true value"}, 400)
-        if (glioma + meningioma + pituitary + no_tumor) == 0:
-            return response_generation({"message": "ERROR! all values is false"}, 400)
         append_feedback_fred(id, glioma, meningioma, pituitary, no_tumor, comment)
         return response_generation({"message": "POST ACCEPTED"}, 200)
 
@@ -61,9 +59,6 @@ class Predict(Resource):
             return response_generation({"message": "ERROR! no exists ID"}, 404)
         if (pneumonia + no_pneumonia) == 2:
             return response_generation({"message": "ERROR! there is more than one true value"}, 400)
-        if (pneumonia + no_pneumonia) == 0:
-            return response_generation({"message": "ERROR! all values is false"}, 400)
-
         append_feedback_wini(id, pneumonia, no_pneumonia, comment)
         return response_generation({"message": "POST ACCEPTED"}, 200)
     
@@ -94,8 +89,6 @@ class Feedback(Resource):
             return response_generation({"message": "ERROR! no exists ID"}, 404)
         if (quiste + piedra + tumor + normal) > 1:
             return response_generation({"message": "ERROR! there is more than one true value"}, 400)
-        if (quiste + piedra + tumor + normal) == 0:
-            return response_generation({"message": "ERROR! all values is false"}, 400)
         append_feedback_lyso(id, quiste, piedra, tumor, normal, comment)
         return response_generation({"message": "POST ACCEPTED"}, 200)
 
