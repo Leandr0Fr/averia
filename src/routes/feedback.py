@@ -14,7 +14,7 @@ parser_fred.add_argument('comment', type=str, help='comment')
 
 
 @ns_feedback.route("/fred")
-@ns_feedback.doc(responses={200: "POST ACCEPTED", 204: "ERROR! ID not exists", 400: "ERROR! ID is not int", 400: "ERROR! there is more than one true value"})
+@ns_feedback.doc(responses={200: "POST ACCEPTED", 204: "ERROR! ID not exists", 400: "ERROR! ID is not int / ERROR! there is more than one true value"})
 class Feedback(Resource):
     @ns_feedback.expect(parser_fred)
     def post(self):
@@ -47,7 +47,7 @@ parser_wini.add_argument('comment', type=str, help='comment')
 
 
 @ns_feedback.route("/wini")
-@ns_feedback.doc(responses={200: "POST ACCEPTED", 204: "ERROR! ID not exists", 400: "ERROR! ID is not int", 400: "ERROR! there is more than one true value"})
+@ns_feedback.doc(responses={200: "POST ACCEPTED", 204: "ERROR! ID not exists", 400: "ERROR! ID is not int / ERROR! there is more than one true value"})
 class Predict(Resource):
     @ns_feedback.expect(parser_wini)
     def post(self):
@@ -77,7 +77,7 @@ parser_lyso.add_argument('comment', type=str, help='comment')
 
 
 @ns_feedback.route("/lyso")
-@ns_feedback.doc(responses={200: "POST ACCEPTED", 204: "ERROR! ID not exists", 400: "ERROR! ID is not int", 400: "ERROR! there is more than one true value"})
+@ns_feedback.doc(responses={200: "POST ACCEPTED", 204: "ERROR! ID not exists", 400: "ERROR! ID is not int / ERROR! there is more than one true value"})
 class Feedback(Resource):
     @ns_feedback.expect(parser_lyso)
     def post(self):
