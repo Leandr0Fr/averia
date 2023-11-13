@@ -3,7 +3,6 @@ from .response_generation import response_generation
 from werkzeug.datastructures import FileStorage
 from .model import prediction_tumor, prediction_pneumonia, prediction_kidney
 from .connected_csv import *
-import time
 from .routes import *
 
 ns_predict = Namespace("predict")
@@ -19,7 +18,9 @@ parser_fred.add_argument(
 parser_fred.add_argument(
     'perdida_visual', type=inputs.boolean, help='perdida_visual')
 
+
 @ns_predict.route("/fred")
+@ns_predict.doc(responses={200: "Prediction ok!", 400: "ERROR! ID is not int / ERROR existing ID ", 404: "ERROR! image not found", 418: "I'm a teapot! (No se le paso un archivo con la extensión correcta)"})
 class Predict(Resource):
     @ns_predict.expect(parser_fred)
     def post(self):
@@ -66,6 +67,7 @@ parser_wini.add_argument('dificultad_respiratoria',
 
 
 @ns_predict.route("/wini")
+@ns_predict.doc(responses={200: "Prediction ok!", 400: "ERROR! ID is not int / ERROR existing ID ", 404: "ERROR! image not found", 418: "I'm a teapot! (No se le paso un archivo con la extensión correcta)"})
 class Predict(Resource):
     @ns_predict.expect(parser_wini)
     def post(self):
@@ -75,7 +77,7 @@ class Predict(Resource):
         puntada_lateral = 1 if args['puntada_lateral'] else 0
         fiebre = 1 if args['fiebre'] else 0
         dificultad_respiratoria = 1 if args['dificultad_respiratoria'] else 0
-        
+
         if image == None:
             return response_generation({"message": "ERROR! image not found"}, 404)
         if exists_id(CSV_WINI, id):
@@ -102,7 +104,7 @@ class Predict(Resource):
 
 parser_lyso = reqparse.RequestParser()
 parser_lyso .add_argument('image', type=FileStorage,
-                         location='files', help='Image file')
+                          location='files', help='Image file')
 parser_lyso .add_argument('id_image', type=int, help='Id_image')
 parser_lyso .add_argument(
     'hermaturia', type=inputs.boolean, help='hermaturia')
@@ -115,7 +117,9 @@ parser_lyso .add_argument(
 parser_lyso .add_argument(
     'perdida_peso', type=inputs.boolean, help='perdida_peso')
 
+
 @ns_predict.route("/lyso")
+@ns_predict.doc(responses={200: "Prediction ok!", 400: "ERROR! ID is not int / ERROR existing ID ", 404: "ERROR! image not found", 418: "I'm a teapot! (No se le paso un archivo con la extensión correcta)"})
 class Predict(Resource):
     @ns_predict.expect(parser_lyso)
     def post(self):
@@ -141,7 +145,7 @@ class Predict(Resource):
 
             image.save(f"{IMAGES_LYSO}/{name}.png")
             response_data = {}
-            class_probabilities = prediction_kidney(name) 
+            class_probabilities = prediction_kidney(name)
 
             for class_type, probability in class_probabilities:
                 response_data[class_type.lower()] = probability

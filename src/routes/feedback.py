@@ -12,7 +12,9 @@ parser_fred.add_argument('pituitary', type=inputs.boolean, help='pituitary')
 parser_fred.add_argument('no_tumor', type=inputs.boolean, help='no_tumor')
 parser_fred.add_argument('comment', type=str, help='comment')
 
+
 @ns_feedback.route("/fred")
+@ns_feedback.doc(responses={200: "POST ACCEPTED", 204: "ERROR! ID not exists", 400: "ERROR! ID is not int", 400: "ERROR! there is more than one true value"})
 class Feedback(Resource):
     @ns_feedback.expect(parser_fred)
     def post(self):
@@ -27,10 +29,11 @@ class Feedback(Resource):
         if not is_int:
             return response_generation({"message": "ERROR! ID is not int"}, 400)
         if not exists_id(CSV_FRED, id):
-            return response_generation({"message": "ERROR! ID not exists"}, 404)
+            return response_generation({"message": "ERROR! ID not exists"}, 204)
         if (glioma + meningioma + pituitary + no_tumor) > 1:
             return response_generation({"message": "ERROR! there is more than one true value"}, 400)
-        append_feedback_fred(id, glioma, meningioma, pituitary, no_tumor, comment)
+        append_feedback_fred(id, glioma, meningioma,
+                             pituitary, no_tumor, comment)
         return response_generation({"message": "POST ACCEPTED"}, 200)
 
 
@@ -44,6 +47,7 @@ parser_wini.add_argument('comment', type=str, help='comment')
 
 
 @ns_feedback.route("/wini")
+@ns_feedback.doc(responses={200: "POST ACCEPTED", 204: "ERROR! ID not exists", 400: "ERROR! ID is not int", 400: "ERROR! there is more than one true value"})
 class Predict(Resource):
     @ns_feedback.expect(parser_wini)
     def post(self):
@@ -56,12 +60,12 @@ class Predict(Resource):
         if not is_int:
             return response_generation({"message": "ERROR! ID is not int"}, 400)
         if not exists_id(CSV_WINI, id):
-            return response_generation({"message": "ERROR! ID not exists"}, 404)
+            return response_generation({"message": "ERROR! ID not exists"}, 204)
         if (pneumonia + no_pneumonia) == 2:
             return response_generation({"message": "ERROR! there is more than one true value"}, 400)
         append_feedback_wini(id, pneumonia, no_pneumonia, comment)
         return response_generation({"message": "POST ACCEPTED"}, 200)
-    
+
 
 parser_lyso = reqparse.RequestParser()
 parser_lyso.add_argument('id_image', type=int, help='id_image')
@@ -71,7 +75,9 @@ parser_lyso.add_argument('tumor', type=inputs.boolean, help='tumor')
 parser_lyso.add_argument('normal', type=inputs.boolean, help='normal')
 parser_lyso.add_argument('comment', type=str, help='comment')
 
+
 @ns_feedback.route("/lyso")
+@ns_feedback.doc(responses={200: "POST ACCEPTED", 204: "ERROR! ID not exists", 400: "ERROR! ID is not int", 400: "ERROR! there is more than one true value"})
 class Feedback(Resource):
     @ns_feedback.expect(parser_lyso)
     def post(self):
@@ -86,9 +92,8 @@ class Feedback(Resource):
         if not is_int:
             return response_generation({"message": "ERROR! ID is not int"}, 400)
         if not exists_id(CSV_LYSO, id):
-            return response_generation({"message": "ERROR! ID not exists"}, 404)
+            return response_generation({"message": "ERROR! ID not exists"}, 204)
         if (quiste + piedra + tumor + normal) > 1:
             return response_generation({"message": "ERROR! there is more than one true value"}, 400)
         append_feedback_lyso(id, quiste, piedra, tumor, normal, comment)
         return response_generation({"message": "POST ACCEPTED"}, 200)
-
