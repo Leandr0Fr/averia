@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 from .routes import *
+
 def exists_id(csv, id):
     df = pd.read_csv(csv)
     list_id = df['id'].tolist()
@@ -102,3 +103,13 @@ def delete_all(route_csv, name):
             os.remove(file_path)
 
     df.to_csv(route_csv, index=False)
+
+def get_info(id, route_csv):
+    df = pd.read_csv(route_csv)
+    row = df[df['id'] == id]
+    
+    map = {}
+    for key, value in row.items():
+        map[key] = value.item()
+    
+    return map

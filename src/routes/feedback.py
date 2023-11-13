@@ -27,7 +27,7 @@ class Feedback(Resource):
         if not is_int:
             return response_generation({"message": "ERROR! ID is not int"}, 400)
         if not exists_id(CSV_FRED, id):
-            return response_generation({"message": "ERROR! no exists ID"}, 404)
+            return response_generation({"message": "ERROR! ID not exists"}, 404)
         if (glioma + meningioma + pituitary + no_tumor) > 1:
             return response_generation({"message": "ERROR! there is more than one true value"}, 400)
         append_feedback_fred(id, glioma, meningioma, pituitary, no_tumor, comment)
@@ -56,7 +56,7 @@ class Predict(Resource):
         if not is_int:
             return response_generation({"message": "ERROR! ID is not int"}, 400)
         if not exists_id(CSV_WINI, id):
-            return response_generation({"message": "ERROR! no exists ID"}, 404)
+            return response_generation({"message": "ERROR! ID not exists"}, 404)
         if (pneumonia + no_pneumonia) == 2:
             return response_generation({"message": "ERROR! there is more than one true value"}, 400)
         append_feedback_wini(id, pneumonia, no_pneumonia, comment)
@@ -86,7 +86,7 @@ class Feedback(Resource):
         if not is_int:
             return response_generation({"message": "ERROR! ID is not int"}, 400)
         if not exists_id(CSV_LYSO, id):
-            return response_generation({"message": "ERROR! no exists ID"}, 404)
+            return response_generation({"message": "ERROR! ID not exists"}, 404)
         if (quiste + piedra + tumor + normal) > 1:
             return response_generation({"message": "ERROR! there is more than one true value"}, 400)
         append_feedback_lyso(id, quiste, piedra, tumor, normal, comment)
