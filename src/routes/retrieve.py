@@ -9,7 +9,7 @@ parser_retrieve.add_argument('id_image', type=int, help='id_image')
 
 
 @ns_retrieve.route("")
-@ns_retrieve.doc(responses={200: "Retrieve ok!", 204: "ERROR! ID not exists", 400: "ERROR existing ID"})
+@ns_retrieve.doc(responses={200: "Retrieve ok!", 204: "ERROR! ID not exists", 400: "ERROR ID is not int"})
 class Retrieve(Resource):
     @ns_retrieve.expect(parser_retrieve)
     def get(self):
