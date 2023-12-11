@@ -1,10 +1,8 @@
 from flask_restx import Resource, Namespace
-from .response_generation import response_generation
-from .connected_csv import *
+from app.utils.connected_csv import *
+from app.utils.routes import *
 from flask import send_file
-import shutil
-import os
-from .routes import *
+import shutil, os
 
 ns_download = Namespace("download")
 

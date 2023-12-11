@@ -1,26 +1,30 @@
 from flask_restx import Resource, Namespace, reqparse, inputs
-from .response_generation import response_generation
+from app.utils.response_generation import response_generation
 from werkzeug.datastructures import FileStorage
 from .model import prediction_tumor, prediction_pneumonia, prediction_kidney
-from .connected_csv import *
-from .routes import *
+from app.utils.connected_csv import *
+from app.utils.routes import *
 
 ns_predict = Namespace("predict")
-# Define un analizador de solicitud para manejar la carga de archivos
+
 parser_fred = reqparse.RequestParser()
+
 parser_fred.add_argument('image', type=FileStorage,
                          location='files', help='Image file')
+
 parser_fred.add_argument('id_image', type=int, help='Id_image')
+
 parser_fred.add_argument(
     'debilidad_focal', type=inputs.boolean, help='debilidad_focal')
+
 parser_fred.add_argument(
     'convulsiones', type=inputs.boolean, help='convulsiones')
+
 parser_fred.add_argument(
     'perdida_visual', type=inputs.boolean, help='perdida_visual')
 
-
 @ns_predict.route("/fred")
-@ns_predict.doc(responses={200: "Prediction ok!", 400: "ERROR! ID is not int / ERROR existing ID ", 404: "ERROR! image not found", 418: "I'm a teapot! (No se le paso un archivo con la extensión correcta)"})
+@ns_predict.doc(responses={200: "Prediction ok!", 400: "¡ERROR! ID is not int / ¡ERROR! existing ID ", 404: "¡ERROR! image not found", 418: "I'm a teapot!"})
 class Predict(Resource):
     @ns_predict.expect(parser_fred)
     def post(self):
@@ -54,20 +58,23 @@ class Predict(Resource):
         else:
             return response_generation({"message": "I'm a teapot!"}, 418)
 
-
 parser_wini = reqparse.RequestParser()
+
 parser_wini.add_argument('image', type=FileStorage,
                          location='files', help='Image file')
+
 parser_wini.add_argument('id_image', type=int, help='Id_image')
+
 parser_wini.add_argument(
     'puntada_lateral', type=inputs.boolean, help='puntada_lateral')
+
 parser_wini.add_argument('fiebre', type=inputs.boolean, help='fiebre')
+
 parser_wini.add_argument('dificultad_respiratoria',
                          type=inputs.boolean, help='dificultad_respiratoria')
 
-
 @ns_predict.route("/wini")
-@ns_predict.doc(responses={200: "Prediction ok!", 400: "ERROR! ID is not int / ERROR existing ID ", 404: "ERROR! image not found", 418: "I'm a teapot! (No se le paso un archivo con la extensión correcta)"})
+@ns_predict.doc(responses={200: "Prediction ok!", 400: "¡ERROR! ID is not int / ¡ERROR! existing ID ", 404: "¡ERROR! image not found", 418: "¡I'm a teapot! (No se le paso un archivo con la extensión correcta)"})
 class Predict(Resource):
     @ns_predict.expect(parser_wini)
     def post(self):
@@ -103,20 +110,26 @@ class Predict(Resource):
 
 
 parser_lyso = reqparse.RequestParser()
+
 parser_lyso .add_argument('image', type=FileStorage,
                           location='files', help='Image file')
+
 parser_lyso .add_argument('id_image', type=int, help='Id_image')
+
 parser_lyso .add_argument(
     'hermaturia', type=inputs.boolean, help='hermaturia')
+
 parser_lyso .add_argument(
     'dolor_lumbar', type=inputs.boolean, help='dolor_lumbar')
+
 parser_lyso .add_argument(
     'dolor_abdominal', type=inputs.boolean, help='dolor_abdominal')
+
 parser_lyso .add_argument(
     'fiebre', type=inputs.boolean, help='fiebre')
+
 parser_lyso .add_argument(
     'perdida_peso', type=inputs.boolean, help='perdida_peso')
-
 
 @ns_predict.route("/lyso")
 @ns_predict.doc(responses={200: "Prediction ok!", 400: "ERROR! ID is not int / ERROR existing ID ", 404: "ERROR! image not found", 418: "I'm a teapot! (No se le paso un archivo con la extensión correcta)"})

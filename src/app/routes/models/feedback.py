@@ -1,9 +1,10 @@
 from flask_restx import Resource, Namespace, reqparse, inputs
-from .response_generation import response_generation
-from .connected_csv import *
-from .routes import *
+from app.utils.response_generation import response_generation
+from app.utils.connected_csv import *
+from app.utils.routes import *
+
 ns_feedback = Namespace("feedback")
-# Define un analizador de solicitud para manejar la carga de archivos
+
 parser_fred = reqparse.RequestParser()
 parser_fred.add_argument('id_image', type=int, help='id_image')
 parser_fred.add_argument('glioma', type=inputs.boolean, help='glioma')

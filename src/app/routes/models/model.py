@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow
 from PIL import Image
-from .routes import *
+from app.utils.routes import *
 
 def prediction_tumor(name):
     # Carga el modelo.

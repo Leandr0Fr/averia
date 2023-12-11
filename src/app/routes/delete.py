@@ -1,7 +1,7 @@
 from flask_restx import Resource, Namespace, reqparse
-from .response_generation import response_generation
-from .connected_csv import *
-from .routes import *
+from app.utils.response_generation import response_generation
+from app.utils.connected_csv import *
+from app.utils.routes import *
 ns_delete = Namespace("delete")
 
 parser_fred = reqparse.RequestParser()
