@@ -4,7 +4,7 @@ from app.utils.connected_csv import *
 from app.utils.routes import *
 
 ns_retrieve = Namespace("retrieve")
-# Define un analizador de solicitud para manejar la carga de archivos
+
 parser_retrieve = reqparse.RequestParser()
 parser_retrieve.add_argument('id_image', type=int, help='id_image')
 
