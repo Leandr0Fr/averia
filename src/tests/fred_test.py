@@ -7,7 +7,7 @@ sys.path.append(route_src)
 import unittest
 from app import app
 from routes import *
-from app.utils.connected_csv import delete_all, delete_id
+from app.utils.connected_csv import delete_id
 from app.utils.routes import *
 
 class TestAppEndpoints(unittest.TestCase):
