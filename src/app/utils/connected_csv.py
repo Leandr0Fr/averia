@@ -84,7 +84,7 @@ def delete_id(id, route_csv, model):
 
     if not row.empty:
         image = row['imagen'].values[0]
-        route = f"csv/{model}/{image}"
+        route = f"{CSV_ROUTE}/{model}/{image}"
         if os.path.exists(route):
             os.remove(route)
     df = df[df['id'] != id]
@@ -92,7 +92,7 @@ def delete_id(id, route_csv, model):
     df.to_csv(route_csv, index=False, float_format='%.0f')
 
 def delete_all(route_csv, name):
-    route_images = f"csv/{name}/images"
+    route_images = f"{CSV_ROUTE}/{name}/images"
     df = pd.read_csv(route_csv)
     df = pd.DataFrame(columns=df.columns)
     for filename in os.listdir(route_images):
