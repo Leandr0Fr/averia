@@ -83,5 +83,5 @@ class Delete(Resource):
             return response_generation({"message": "ERROR! name is not string"}, 400)
         if (name != "wini" and name != "fred" and name != "lyso"):
             return response_generation({"message": "ERROR! model name not exists"}, 204)
-        delete_all(f"csv/{name}/{name}.csv", name)
+        delete_all(f"{CSV_ROUTE}/{name}/{name}.csv", name)
         return response_generation({"message": f"DELETE ALL ROWS: {name}"}, 200)

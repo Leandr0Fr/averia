@@ -8,8 +8,8 @@ src_route = os.path.abspath(os.path.join(app_route, '..'))
 MODEL_FRED = f"{src_route}/app/models_ia/tumor_model.h5"
 CSV_FRED = f"{src_route}/app/csv/fred/fred.csv"
 IMAGES_FRED = f"{src_route}/app/csv/fred/images"
-FOLDER_FRED = f"{src_route}app/csv/fred"
-DOWNLOAD_FRED_ROUTE = f"{src_route}download/fred.zip"
+FOLDER_FRED = f"{src_route}/app/csv/fred"
+DOWNLOAD_FRED_ROUTE = f"{src_route}/download/fred.zip"
 #rutas relacionadas con el modelo wini
 MODEL_WINI = f"{src_route}/app/models_ia/neumonia-resnet.h5"
 CSV_WINI = f"{src_route}/app/csv/wini/wini.csv"
